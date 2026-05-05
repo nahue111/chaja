@@ -12,23 +12,20 @@ export default function About() {
 
           {/* Mosaic */}
           <div className="relative">
-            <div className="grid grid-cols-2 gap-2 max-h-[520px]">
+            <div className="grid grid-cols-2 gap-2" style={{ gridTemplateRows: 'repeat(4, 120px)' }}>
               {[
-                { src: '/catalogo/familia-clasica.png', tall: true },
-                { src: '/catalogo/helado-caja.png', tall: false },
-                { src: '/catalogo/x4-durazno.png', tall: false },
-                { src: '/catalogo/alfajores-yoyo.png', tall: false },
-                { src: '/catalogo/torta-charlotte.png', tall: false },
-                { src: '/catalogo/familia-gold.png', tall: true },
-                { src: '/catalogo/x12-frutilla.png', tall: false },
-                { src: '/catalogo/familia-chocolate.png', tall: false },
-              ].map((img, i) => (
-                <div
-                  key={i}
-                  className={`rounded-xl overflow-hidden ${img.tall ? 'row-span-2' : ''}`}
-                >
+                '/catalogo/familia-clasica.png',
+                '/catalogo/helado-caja.png',
+                '/catalogo/x4-durazno.png',
+                '/catalogo/alfajores-yoyo.png',
+                '/catalogo/torta-charlotte.png',
+                '/catalogo/familia-gold.png',
+                '/catalogo/x12-frutilla.png',
+                '/catalogo/familia-chocolate.png',
+              ].map((src, i) => (
+                <div key={i} className="rounded-xl overflow-hidden">
                   <img
-                    src={img.src}
+                    src={src}
                     alt=""
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                   />
