@@ -9,46 +9,57 @@ const categories = {
         id: 'porcion-400',
         name: 'Porción Chajá',
         tag: 'Familiar',
-        price: 'Consultar',
         weight: '400 gr · 4 porciones',
-        description: 'Porción familiar de Chajá elaborado con la receta original. Merengue, bizcochuelo, crema y fruta.',
-        img: '/catalogo/chaja-familia.png',
+        description: 'Porción familiar del auténtico Chajá. Merengue, bizcochuelo, crema y fruta.',
+        img: '/catalogo/familia-porcion.png',
       },
       {
-        id: 'familiar-600',
-        name: 'Torta Chajá Familiar',
+        id: 'familiar-600-durazno',
+        name: 'Chajá con Durazno',
         tag: 'Familiar',
-        price: 'Consultar',
         weight: '600 gr · 6 porciones',
-        description: 'Torta familiar Chajá con merengue característico, bizcochuelo, crema y fruta. Ideal para compartir.',
-        img: '/catalogo/chaja-familia-2.png',
+        description: 'Torta familiar Chajá con durazno. Merengue característico, bizcochuelo y crema.',
+        img: '/catalogo/familia-durazno.png',
       },
       {
-        id: 'familiar-1200-10',
-        name: 'Torta Chajá Familiar',
+        id: 'familiar-600-ddl',
+        name: 'Chajá con Dulce de Leche',
         tag: 'Familiar',
-        price: 'Consultar',
-        weight: '1,2 kg · 10 porciones',
-        description: 'Torta familiar grande. Merengue, bizcochuelo, crema y fruta al estilo tradicional Chajá.',
-        img: '/catalogo/chaja-familia-3.png',
+        weight: '600 gr',
+        description: 'Torta familiar con dulce de leche. Una versión irresistible del clásico uruguayo.',
+        img: '/catalogo/familia-ddl.png',
       },
       {
-        id: 'familiar-1200-12',
-        name: 'Torta Chajá Familiar',
+        id: 'familiar-chocolate',
+        name: 'Chajá Sabor Chocolate',
         tag: 'Familiar',
-        price: 'Consultar',
-        weight: '1,2 kg · 12 porciones',
-        description: 'Versión generosa de la torta familiar, perfecta para celebraciones y reuniones.',
-        img: '/catalogo/chaja-familia.png',
+        weight: '600 gr',
+        description: 'Torta familiar sabor chocolate. El Chajá en su versión más indulgente.',
+        img: '/catalogo/familia-chocolate.png',
       },
       {
-        id: 'familiar-1500',
-        name: 'Torta Chajá Familiar',
+        id: 'familiar-gold',
+        name: 'Chajá Gold',
         tag: 'Premium',
-        price: 'Consultar',
+        weight: '1,2 kg · 10–12 porciones',
+        description: 'La línea Gold de Chajá. Presentación premium en caja negra, ideal para regalar.',
+        img: '/catalogo/familia-gold.png',
+      },
+      {
+        id: 'familiar-especial',
+        name: 'Chajá Especial Uruguayo',
+        tag: 'Especial',
         weight: '1,5 kg · 15 porciones',
-        description: 'La torta más grande de la línea familiar. El Chajá en su versión más generosa para grandes ocasiones.',
-        img: '/catalogo/chaja-familia-2.png',
+        description: 'La torta más grande de la línea familiar. Presentación especial con los colores de Uruguay.',
+        img: '/catalogo/familia-especial.png',
+      },
+      {
+        id: 'familiar-clasica',
+        name: 'Chajá Clásico',
+        tag: 'Clásico',
+        weight: '1,2 kg · 10 porciones',
+        description: 'El auténtico Chajá uruguayo en su presentación familiar clásica. Sin adornos, solo sabor.',
+        img: '/catalogo/familia-clasica.png',
       },
     ],
   },
@@ -56,31 +67,28 @@ const categories = {
     label: 'Chajá Helado',
     products: [
       {
-        id: 'helado-ddl-350',
-        name: 'Porción Chajá Helado con DDL',
+        id: 'helado-caja',
+        name: 'Chajá Helado',
         tag: 'Helado',
-        price: 'Consultar',
-        weight: '350 gr',
-        description: 'Porción de Chajá helado con dulce de leche natural. Una versión refrescante del postre clásico uruguayo.',
-        img: '/catalogo/chaja-helado.png',
+        weight: '350 gr con DDL natural',
+        description: 'Porción de Chajá helado con dulce de leche natural. Una versión refrescante del clásico uruguayo.',
+        img: '/catalogo/helado-caja.png',
       },
       {
         id: 'petit-helado-ddl',
         name: 'Chajá Petit Helado con DDL',
         tag: 'Helado',
-        price: 'Consultar',
         weight: '100 gr',
-        description: 'Petit Chajá helado con dulce de leche natural. El clásico en formato individual, perfecto para cualquier momento.',
-        img: '/catalogo/chaja-helado-2.png',
+        description: 'Petit Chajá helado con dulce de leche natural. El clásico en formato individual.',
+        img: '/catalogo/helado-petit-ddl.png',
       },
       {
         id: 'petit-helado-durazno',
         name: 'Chajá Petit Helado con Durazno',
         tag: 'Helado',
-        price: 'Consultar',
         weight: '100 gr',
-        description: 'Petit Chajá helado con durazno. Bizcochuelo, merengue, crema y durazno en una porción individual helada.',
-        img: '/catalogo/chaja-helado-3.png',
+        description: 'Petit Chajá helado con durazno. Bizcochuelo, merengue, crema y durazno en formato individual.',
+        img: '/catalogo/helado-petit-durazno.png',
       },
     ],
   },
@@ -88,49 +96,36 @@ const categories = {
     label: 'Caja x4',
     products: [
       {
-        id: 'x4-generaciones',
-        name: '4 Generaciones',
-        tag: 'Caja x4',
-        price: 'Consultar',
-        weight: '120 gr c/u',
-        description: 'Caja de 4 Chajá individuales edición 4 Generaciones. La historia del Chajá en un solo pack.',
-        img: '/catalogo/chaja-x4.png',
-      },
-      {
         id: 'x4-durazno',
         name: 'Tradicional de Durazno',
         tag: 'Caja x4',
-        price: 'Consultar',
         weight: '120 gr c/u',
-        description: 'Caja de 4 Chajá individuales con el sabor clásico de durazno. Merengue, bizcochuelo y crema.',
-        img: '/catalogo/chaja-x4-2.png',
+        description: 'Caja de 4 Chajá individuales con el sabor clásico de durazno.',
+        img: '/catalogo/x4-durazno.png',
       },
       {
         id: 'x4-clasico',
         name: 'Clásico sin Fruta',
         tag: 'Caja x4',
-        price: 'Consultar',
         weight: '120 gr c/u',
-        description: 'Caja de 4 Chajá individuales clásico sin fruta. El sabor puro del merengue, bizcochuelo y crema.',
-        img: '/catalogo/chaja-x4.png',
+        description: 'Caja de 4 Chajá individuales clásico sin fruta. El sabor puro del merengue y crema.',
+        img: '/catalogo/x4-clasico.png',
+      },
+      {
+        id: 'x4-clasico2',
+        name: '4 Generaciones',
+        tag: 'Caja x4',
+        weight: '120 gr c/u',
+        description: 'Caja de 4 Chajá individuales edición 4 Generaciones. La historia del Chajá en un solo pack.',
+        img: '/catalogo/x4-clasico2.png',
       },
       {
         id: 'x4-frutilla',
         name: 'Frutilla',
         tag: 'Caja x4',
-        price: 'Consultar',
         weight: '120 gr c/u',
-        description: 'Caja de 4 Chajá individuales con frutilla. Merengue característico, bizcochuelo y crema con frutilla.',
-        img: '/catalogo/chaja-x4-2.png',
-      },
-      {
-        id: 'x4-bosque',
-        name: 'Frutos del Bosque',
-        tag: 'Caja x4',
-        price: 'Consultar',
-        weight: '120 gr c/u',
-        description: 'Caja de 4 Chajá individuales con frutos del bosque. Una combinación de sabores intensos y frescos.',
-        img: '/catalogo/chaja-x4.png',
+        description: 'Caja de 4 Chajá individuales con frutilla. Merengue, bizcochuelo y crema con frutilla fresca.',
+        img: '/catalogo/x4-frutilla.png',
       },
     ],
   },
@@ -138,40 +133,28 @@ const categories = {
     label: 'Caja x12',
     products: [
       {
-        id: 'x12-durazno',
-        name: 'Tradicional de Durazno',
+        id: 'x12-clasico',
+        name: 'Clásico',
         tag: 'Caja x12',
-        price: 'Consultar',
         weight: '120 gr c/u',
-        description: 'Caja de 12 Chajá individuales sabor durazno. Ideal para regalar o para eventos.',
-        img: '/catalogo/chaja-x12.png',
+        description: 'Caja de 12 Chajá individuales clásico. Ideal para regalar o para eventos.',
+        img: '/catalogo/x12-clasico.png',
       },
       {
-        id: 'x12-clasico',
-        name: 'Clásico sin Fruta',
+        id: 'x12-morado',
+        name: 'Frutos del Bosque',
         tag: 'Caja x12',
-        price: 'Consultar',
         weight: '120 gr c/u',
-        description: 'Caja de 12 Chajá individuales clásico sin fruta. El sabor original en su máxima expresión.',
-        img: '/catalogo/chaja-x12-2.png',
+        description: 'Caja de 12 Chajá individuales con frutos del bosque. Sabores intensos y frescos.',
+        img: '/catalogo/x12-morado.png',
       },
       {
         id: 'x12-frutilla',
         name: 'Frutilla',
         tag: 'Caja x12',
-        price: 'Consultar',
         weight: '120 gr c/u',
-        description: 'Caja de 12 Chajá individuales con frutilla. Perfectos para compartir en reuniones y celebraciones.',
-        img: '/catalogo/chaja-x12.png',
-      },
-      {
-        id: 'x12-bosque',
-        name: 'Frutos del Bosque',
-        tag: 'Caja x12',
-        price: 'Consultar',
-        weight: '120 gr c/u',
-        description: 'Caja de 12 Chajá individuales con frutos del bosque. Un pack completo para los amantes del Chajá.',
-        img: '/catalogo/chaja-x12-2.png',
+        description: 'Caja de 12 Chajá individuales con frutilla. Perfectos para compartir en cualquier celebración.',
+        img: '/catalogo/x12-frutilla.png',
       },
     ],
   },
@@ -182,48 +165,73 @@ const categories = {
         id: 'alfajor-yoyo',
         name: 'Alfajor Chajá tipo Yoyo',
         tag: 'Alfajor',
-        price: 'Consultar',
         weight: 'Individual · Caja x12',
-        description: 'Alfajores Chajá tipo yoyo, disponibles por unidad o en caja de 12. Un clásico irresistible.',
-        img: '/catalogo/alfajores.png',
+        description: 'Alfajores Chajá tipo yoyo: chocolate, maicena y chocolate blanco. Disponibles por unidad o caja.',
+        img: '/catalogo/alfajores-yoyo.png',
       },
       {
-        id: 'alfajor-maicena',
+        id: 'alfajor-caja',
         name: 'Alfajor de Maicena',
         tag: 'Alfajor',
-        price: 'Consultar',
         weight: 'Individual',
-        description: 'Alfajor de maicena en versión común o con maní. Suave, delicado y con el sabor de siempre.',
-        img: '/catalogo/alfajores-2.png',
+        description: 'Alfajor de maicena común o con maní. También disponible en caja x12.',
+        img: '/catalogo/alfajores-caja.png',
       },
       {
-        id: 'postre-repostero',
-        name: 'Postre Repostero',
-        tag: 'Torta',
-        price: 'Consultar',
+        id: 'torta-charlotte',
+        name: 'Charlotte de Frutos del Bosque',
+        tag: 'Repostero',
         weight: '6 a 8 porciones',
-        description: 'Postre repostero elaborado por nuestro equipo. Una propuesta diferente para quienes buscan algo especial.',
-        img: '/catalogo/tortas.png',
+        description: 'Postre repostero estilo charlotte con vainillas y crema de frutos del bosque.',
+        img: '/catalogo/torta-charlotte.png',
       },
       {
-        id: 'mini-cake',
-        name: 'Mini Cake',
-        tag: 'Torta',
-        price: 'Consultar',
+        id: 'torta-oreo',
+        name: 'Torta Oreo',
+        tag: 'Repostero',
+        weight: '6 a 8 porciones',
+        description: 'Postre repostero con Oreos, crema y chocolate. Una opción irresistible para los amantes del chocolate.',
+        img: '/catalogo/torta-oreo.png',
+      },
+      {
+        id: 'torta-profiteroles',
+        name: 'Profiteroles de DDL',
+        tag: 'Repostero',
+        weight: '6 a 8 porciones',
+        description: 'Postre repostero de profiteroles con dulce de leche. Crujiente por fuera, suave por dentro.',
+        img: '/catalogo/torta-profiteroles.png',
+      },
+      {
+        id: 'torta-bosque',
+        name: 'Torta Frutos del Bosque',
+        tag: 'Mini Cake',
         weight: '4 porciones',
-        description: 'Mini cake de 4 porciones. Ideal para cumpleaños íntimos o para darse un gusto sin excusas.',
-        img: '/catalogo/tortas-2.png',
+        description: 'Mini cake blanco con frutos del bosque. Elegante y delicioso para ocasiones especiales.',
+        img: '/catalogo/torta-bosque.png',
+      },
+      {
+        id: 'torta-selvanegra',
+        name: 'Selva Negra',
+        tag: 'Mini Cake',
+        weight: '4 porciones',
+        description: 'Mini cake selva negra con chocolate, crema y cerezas. Un clásico de la repostería.',
+        img: '/catalogo/torta-selvanegra.png',
+      },
+      {
+        id: 'torta-chocolate',
+        name: 'Torta de Chocolate',
+        tag: 'Mini Cake',
+        weight: '4 porciones',
+        description: 'Mini cake de chocolate con crema. Para los amantes del chocolate en su máxima expresión.',
+        img: '/catalogo/torta-chocolate.png',
       },
     ],
   },
 }
 
-function ProductCard({ product, index }) {
+function ProductCard({ product }) {
   return (
-    <div
-      className="group flex flex-col bg-white border border-cream-200/60 rounded-2xl overflow-hidden hover:shadow-[0_16px_40px_-12px_rgba(44,26,14,0.14)] transition-all duration-500"
-      style={{ animationDelay: `${index * 80}ms` }}
-    >
+    <div className="group flex flex-col bg-white border border-cream-200/60 rounded-2xl overflow-hidden hover:shadow-[0_16px_40px_-12px_rgba(44,26,14,0.14)] transition-all duration-500">
       <div className="aspect-[4/3] overflow-hidden relative">
         <img
           src={product.img}
@@ -244,10 +252,7 @@ function ProductCard({ product, index }) {
           <h3 className="font-display text-base md:text-lg text-espresso-800 leading-snug tracking-tight">
             {product.name}
           </h3>
-          <div className="text-right shrink-0">
-            <p className="font-mono text-sm font-semibold text-espresso-800">{product.price}</p>
-            <p className="text-espresso-400 text-xs">{product.weight}</p>
-          </div>
+          <p className="text-espresso-400 text-xs text-right shrink-0 mt-1">{product.weight}</p>
         </div>
 
         <p className="text-espresso-500 text-sm leading-relaxed mb-4 flex-1">{product.description}</p>
@@ -267,11 +272,6 @@ function ProductCard({ product, index }) {
 export default function Products() {
   const [activeTab, setActiveTab] = useState('familia')
   const gridRef = useRef(null)
-
-  const handleTab = (key) => {
-    if (key === activeTab) return
-    setActiveTab(key)
-  }
 
   const current = categories[activeTab]
 
@@ -294,11 +294,11 @@ export default function Products() {
           </div>
         </div>
 
-        <div className="flex gap-2 md:gap-6 mb-10 border-b border-cream-200 overflow-x-auto pb-0 scrollbar-none">
+        <div className="flex gap-2 md:gap-6 mb-10 border-b border-cream-200 overflow-x-auto scrollbar-none">
           {Object.entries(categories).map(([key, cat]) => (
             <button
               key={key}
-              onClick={() => handleTab(key)}
+              onClick={() => setActiveTab(key)}
               className={`relative pb-3 text-sm font-medium transition-colors duration-300 whitespace-nowrap shrink-0 ${
                 activeTab === key
                   ? 'text-espresso-800'
@@ -316,12 +316,9 @@ export default function Products() {
           ))}
         </div>
 
-        <div
-          ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-        >
-          {current.products.map((product, i) => (
-            <ProductCard key={product.id} product={product} index={i} />
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {current.products.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
