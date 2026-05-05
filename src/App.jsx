@@ -31,13 +31,13 @@ export default function App() {
         href="https://wa.me/59893394156"
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 left-6 z-50 flex items-center gap-3 bg-[#25D366] text-white pl-4 pr-5 py-3 rounded-full shadow-lg hover:bg-[#20b958] transition-all duration-300 hover:shadow-xl group"
+        className="fixed bottom-6 left-6 z-50 flex items-center gap-0 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:bg-[#20b958] transition-all duration-300 hover:shadow-xl group hover:gap-3 hover:pl-4 hover:pr-5 overflow-hidden"
         aria-label="Contactar a Juan Manuel por WhatsApp"
       >
         <WhatsAppIcon />
-        <div className="leading-tight">
-          <p className="text-[10px] font-medium opacity-80 tracking-wide uppercase">Vendedor</p>
-          <p className="text-sm font-semibold">Juan Manuel</p>
+        <div className="leading-tight max-w-0 group-hover:max-w-[120px] overflow-hidden transition-all duration-300">
+          <p className="text-[10px] font-medium opacity-80 tracking-wide uppercase whitespace-nowrap">Vendedor</p>
+          <p className="text-sm font-semibold whitespace-nowrap">Juan Manuel</p>
         </div>
       </a>
     </>
