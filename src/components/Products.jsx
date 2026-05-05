@@ -294,24 +294,21 @@ export default function Products() {
           </div>
         </div>
 
-        <div className="flex gap-2 md:gap-6 mb-10 border-b border-cream-200 overflow-x-auto scrollbar-none">
+        <div className="flex gap-2 mb-10 overflow-x-auto scrollbar-none">
           {Object.entries(categories).map(([key, cat]) => (
             <button
               key={key}
               onClick={() => setActiveTab(key)}
-              className={`relative pb-3 text-sm font-medium transition-colors duration-300 whitespace-nowrap shrink-0 ${
+              className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap shrink-0 ${
                 activeTab === key
-                  ? 'text-espresso-800'
-                  : 'text-espresso-400 hover:text-espresso-600'
+                  ? 'bg-espresso-800 text-cream-50 shadow-md'
+                  : 'bg-white border border-cream-200 text-espresso-500 hover:border-espresso-400 hover:text-espresso-700'
               }`}
             >
               {cat.label}
-              <span className="ml-1.5 text-xs font-mono text-amber opacity-70">
+              <span className={`ml-1.5 text-xs font-mono ${activeTab === key ? 'text-amber opacity-80' : 'text-amber opacity-60'}`}>
                 {cat.products.length}
               </span>
-              {activeTab === key && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-espresso-800 rounded-full" />
-              )}
             </button>
           ))}
         </div>
