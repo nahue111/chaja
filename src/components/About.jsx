@@ -12,7 +12,7 @@ export default function About() {
 
           {/* Mosaic */}
           <div className="relative">
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-2 max-h-[520px]">
               {[
                 { src: '/catalogo/familia-clasica.png', tall: true },
                 { src: '/catalogo/helado-caja.png', tall: false },
@@ -26,7 +26,6 @@ export default function About() {
                 <div
                   key={i}
                   className={`rounded-xl overflow-hidden ${img.tall ? 'row-span-2' : ''}`}
-                  style={{ aspectRatio: img.tall ? 'auto' : '1/1' }}
                 >
                   <img
                     src={img.src}
