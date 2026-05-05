@@ -24,9 +24,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-12 border-b border-white/8">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <p className="font-display text-2xl text-cream-50 font-semibold tracking-tight mb-4">
-              Chajá<span className="italic font-normal"> Bistro</span>
-            </p>
+            <div className="flex items-center gap-2.5 mb-4">
+              <img src="/logo.png" alt="Chajá Bistro" className="w-9 h-9 rounded-full object-cover shrink-0" />
+              <p className="font-display text-2xl text-cream-50 font-semibold tracking-tight">
+                Chajá<span className="italic font-normal"> Bistro</span>
+              </p>
+            </div>
             <p className="text-sm leading-relaxed max-w-[36ch] mb-7">
               Elaboramos el auténtico Chajá uruguayo de manera artesanal, con ingredientes frescos
               y la receta original de 1927.
