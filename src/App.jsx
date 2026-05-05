@@ -28,7 +28,7 @@ export default function App() {
       <Footer />
 
       <a
-        href="https://wa.me/59893394156"
+        href="https://wa.me/59898590509"
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 left-6 z-50 flex items-center gap-0 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:bg-[#20b958] transition-all duration-300 hover:shadow-xl group hover:gap-3 hover:pl-4 hover:pr-5 overflow-hidden"
