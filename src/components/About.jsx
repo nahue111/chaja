@@ -12,7 +12,7 @@ export default function About() {
 
           {/* Mosaic */}
           <div className="relative">
-            <div className="grid grid-cols-2 gap-2" style={{ gridTemplateRows: 'repeat(4, 120px)' }}>
+            <div className="grid grid-cols-2 gap-2" style={{ gridTemplateRows: 'repeat(4, 160px)' }}>
               {[
                 '/catalogo/familia-clasica.png',
                 '/catalogo/helado-caja.png',
