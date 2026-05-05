@@ -10,15 +10,31 @@ export default function About() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-          {/* Image */}
+          {/* Mosaic */}
           <div className="relative">
-            <div className="aspect-[4/5] rounded-2xl overflow-hidden">
-              <img
-                src="https://www.laylita.com/recetas/wp-content/uploads/2023/08/Preparacion-paso-a-paso-del-postre-o-torta-chaja-uruguaya-scaled.jpg"
-                alt="Elaboración artesanal del Chajá"
-                className="w-full h-full object-cover"
-                onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Torta_chaj%C3%A1.jpg' }}
-              />
+            <div className="grid grid-cols-2 gap-2.5">
+              {[
+                { src: '/catalogo/familia-clasica.png', tall: true },
+                { src: '/catalogo/helado-caja.png', tall: false },
+                { src: '/catalogo/x4-durazno.png', tall: false },
+                { src: '/catalogo/alfajores-yoyo.png', tall: false },
+                { src: '/catalogo/torta-charlotte.png', tall: false },
+                { src: '/catalogo/familia-gold.png', tall: true },
+                { src: '/catalogo/x12-frutilla.png', tall: false },
+                { src: '/catalogo/familia-chocolate.png', tall: false },
+              ].map((img, i) => (
+                <div
+                  key={i}
+                  className={`rounded-xl overflow-hidden ${img.tall ? 'row-span-2' : ''}`}
+                  style={{ aspectRatio: img.tall ? 'auto' : '1/1' }}
+                >
+                  <img
+                    src={img.src}
+                    alt=""
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+              ))}
             </div>
             <div className="absolute -bottom-6 -right-4 md:-right-8 bg-espresso-800 text-cream-50 rounded-2xl px-6 py-5 shadow-[0_20px_40px_-10px_rgba(44,26,14,0.4)]">
               <p className="font-mono text-3xl font-medium text-amber">72+</p>
