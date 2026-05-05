@@ -27,8 +27,15 @@ export default function Navbar() {
       style={{ transition: 'opacity 0.8s ease, transform 0.8s ease, background-color 0.5s ease, box-shadow 0.5s ease' }}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
-        <a href="#" className={`font-display text-xl md:text-2xl font-semibold tracking-tight transition-colors duration-300 ${scrolled ? 'text-espresso-800' : 'text-cream-50'}`}>
-          Chajá<span className="font-normal italic"> Bistro</span>
+        <a href="#" className="flex items-center gap-2.5">
+          <img
+            src="/logo.png"
+            alt="Chajá Bistro"
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover shrink-0"
+          />
+          <span className={`font-display text-xl md:text-2xl font-semibold tracking-tight transition-colors duration-300 ${scrolled ? 'text-espresso-800' : 'text-cream-50'}`}>
+            Chajá<span className="font-normal italic"> Bistro</span>
+          </span>
         </a>
 
         <ul className="hidden md:flex items-center gap-8">
