@@ -1,24 +1,24 @@
-import { useState } from 'react'
-import { X, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
-import { useCart } from '../context/CartContext'
+import { X, Minus, Plus, ShoppingBag, Trash2, ArrowRight } from 'lucide-react'
+import { useCart, FREE_SHIPPING_THRESHOLD, SHIPPING_COST } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 
-export default function CartDrawer() {
-  const { items, remove, updateQty, totalItems, open, setOpen } = useCart()
-  const { user, setLoginOpen } = useAuth()
-  const [checkoutMsg, setCheckoutMsg] = useState(false)
+const fmt = (n) => `$ ${n.toLocaleString('es-UY')}`
 
-  const handleClose = () => {
-    setOpen(false)
-    setCheckoutMsg(false)
-  }
+export default function CartDrawer() {
+  const { items, remove, updateQty, totalItems, totalPrice, open, setOpen, setCheckoutOpen, setCatalogOpen } = useCart()
+  const { user, setLoginOpen } = useAuth()
+
+  const remaining = FREE_SHIPPING_THRESHOLD - totalPrice
+
+  const handleClose = () => setOpen(false)
 
   const handleCheckout = () => {
     if (!user) {
       setLoginOpen(true)
       return
     }
-    setCheckoutMsg(true)
+    setOpen(false)
+    setCheckoutOpen(true)
   }
 
   return (
@@ -42,6 +42,26 @@ export default function CartDrawer() {
           </button>
         </div>
 
+        {/* Free shipping progress */}
+        {items.length > 0 && remaining > 0 && (
+          <div className="px-6 py-3 bg-amber/5 border-b border-amber/10">
+            <p className="text-xs text-espresso-600">
+              Te faltan <span className="font-semibold text-espresso-800">{fmt(remaining)}</span> para envío gratis
+            </p>
+            <div className="mt-2 h-1.5 bg-cream-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-amber rounded-full transition-all duration-500"
+                style={{ width: `${Math.min((totalPrice / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
+              />
+            </div>
+          </div>
+        )}
+        {items.length > 0 && remaining <= 0 && (
+          <div className="px-6 py-3 bg-green-50 border-b border-green-100">
+            <p className="text-xs text-green-700 font-medium">¡Envío gratis aplicado!</p>
+          </div>
+        )}
+
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
@@ -60,7 +80,7 @@ export default function CartDrawer() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-display text-sm text-espresso-800 leading-snug mb-0.5 truncate">{item.name}</p>
-                    <p className="text-xs text-espresso-400 mb-2">{item.weight}</p>
+                    <p className="text-xs text-espresso-400 mb-2">{fmt(item.price)} c/u</p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <button
@@ -77,9 +97,12 @@ export default function CartDrawer() {
                           <Plus size={10} />
                         </button>
                       </div>
-                      <button onClick={() => remove(item.id)} className="p-1 text-espresso-300 hover:text-red-400 transition-colors">
-                        <Trash2 size={14} />
-                      </button>
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-sm font-medium text-espresso-700">{fmt(item.price * item.qty)}</span>
+                        <button onClick={() => remove(item.id)} className="p-1 text-espresso-300 hover:text-red-400 transition-colors">
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -89,35 +112,41 @@ export default function CartDrawer() {
         </div>
 
         {items.length > 0 && (
-          <div className="px-6 py-5 border-t border-cream-200 space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-espresso-500">Total de unidades</span>
-              <span className="font-mono font-medium text-espresso-800">{totalItems}</span>
+          <div className="px-6 py-5 border-t border-cream-200 space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-espresso-500">Subtotal</span>
+              <span className="font-mono text-sm font-medium text-espresso-800">{fmt(totalPrice)}</span>
             </div>
-            <p className="text-xs text-espresso-400">El precio se coordina con el vendedor por WhatsApp.</p>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-espresso-500">Envío</span>
+              <span className={`font-mono text-sm font-medium ${remaining <= 0 ? 'text-green-600' : 'text-espresso-800'}`}>
+                {remaining <= 0 ? 'Gratis' : fmt(SHIPPING_COST)}
+              </span>
+            </div>
 
-            {checkoutMsg ? (
-              <div className="rounded-xl bg-amber/10 border border-amber/20 px-4 py-3 text-sm text-espresso-700 text-center leading-relaxed">
-                ¡Gracias! Pronto nos contactamos por WhatsApp.
-              </div>
-            ) : (
-              <>
-                <button
-                  onClick={handleCheckout}
-                  className="w-full py-3 rounded-full bg-espresso-800 text-cream-50 text-sm font-medium hover:bg-espresso-700 transition-colors active:scale-[0.98]"
-                >
-                  Finalizar compra
-                </button>
-                {!user && (
-                  <p className="text-xs text-center text-espresso-400">
-                    Necesitás{' '}
-                    <button onClick={() => setLoginOpen(true)} className="underline underline-offset-2 text-espresso-600 hover:text-espresso-800">
-                      iniciar sesión
-                    </button>{' '}
-                    para continuar
-                  </p>
-                )}
-              </>
+            <div className="flex gap-2">
+              <button
+                onClick={() => { setOpen(false); setCatalogOpen(true) }}
+                className="flex-1 py-3 rounded-full border border-espresso-800 text-espresso-800 text-xs font-medium hover:bg-espresso-800 hover:text-cream-50 transition-all duration-300 active:scale-[0.98]"
+              >
+                Seguir comprando
+              </button>
+              <button
+                onClick={handleCheckout}
+                className="flex-1 py-3 rounded-full bg-espresso-800 text-cream-50 text-xs font-medium hover:bg-espresso-700 transition-colors active:scale-[0.98] flex items-center justify-center gap-1.5"
+              >
+                Finalizar
+                <ArrowRight size={12} />
+              </button>
+            </div>
+            {!user && (
+              <p className="text-xs text-center text-espresso-400">
+                Necesitás{' '}
+                <button onClick={() => setLoginOpen(true)} className="underline underline-offset-2 text-espresso-600 hover:text-espresso-800">
+                  iniciar sesión
+                </button>{' '}
+                para continuar
+              </p>
             )}
           </div>
         )}

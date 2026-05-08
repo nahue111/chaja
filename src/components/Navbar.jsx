@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { ShoppingBag, User } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 
 const navLinks = [
   { label: 'Nuestro Chajá', href: '#chaja' },
-  { label: 'Productos', href: '#variedades' },
+  { label: 'Productos', href: '/carta', isRoute: true },
   { label: 'Pedidos', href: '#pedidos' },
   { label: 'Contacto', href: '#contacto' },
 ]
@@ -44,10 +45,17 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.label}>
-              <a href={link.href} className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${scrolled ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`}>
-                {link.label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-amber transition-all duration-300 group-hover:w-full" />
-              </a>
+              {link.isRoute ? (
+                <Link to={link.href} className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${scrolled ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`}>
+                  {link.label}
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-amber transition-all duration-300 group-hover:w-full" />
+                </Link>
+              ) : (
+                <a href={link.href} className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${scrolled ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`}>
+                  {link.label}
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-amber transition-all duration-300 group-hover:w-full" />
+                </a>
+              )}
             </li>
           ))}
         </ul>
@@ -87,12 +95,12 @@ export default function Navbar() {
             )}
           </div>
 
-          <a
-            href="#pedidos"
+          <Link
+            to="/carta"
             className={`hidden md:inline-flex items-center gap-2 ml-1 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98] ${scrolled ? 'bg-espresso-800 text-cream-50 hover:bg-espresso-700' : 'bg-white/15 backdrop-blur-sm border border-white/25 text-white hover:bg-white/25'}`}
           >
             Hacer pedido
-          </a>
+          </Link>
 
           <button
             className={`md:hidden p-2 transition-colors duration-300 ${scrolled ? 'text-espresso-800' : 'text-white'}`}
@@ -109,9 +117,9 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-cream-50 border-t border-cream-200 px-6 py-6 flex flex-col gap-5">
           {navLinks.map((link) => (
-            <a key={link.label} href={link.href} className="text-espresso-700 font-medium text-lg" onClick={() => setMenuOpen(false)}>
-              {link.label}
-            </a>
+            link.isRoute
+              ? <Link key={link.label} to={link.href} className="text-espresso-700 font-medium text-lg" onClick={() => setMenuOpen(false)}>{link.label}</Link>
+              : <a key={link.label} href={link.href} className="text-espresso-700 font-medium text-lg" onClick={() => setMenuOpen(false)}>{link.label}</a>
           ))}
           {user ? (
             <button onClick={() => { logout(); setMenuOpen(false) }} className="text-espresso-500 text-sm text-left">
@@ -122,9 +130,9 @@ export default function Navbar() {
               Iniciar sesión
             </button>
           )}
-          <a href="#pedidos" className="mt-2 inline-flex justify-center px-5 py-3 rounded-full bg-espresso-800 text-cream-50 font-medium text-sm" onClick={() => setMenuOpen(false)}>
+          <Link to="/carta" className="mt-2 inline-flex justify-center px-5 py-3 rounded-full bg-espresso-800 text-cream-50 font-medium text-sm" onClick={() => setMenuOpen(false)}>
             Hacer pedido
-          </a>
+          </Link>
         </div>
       )}
     </nav>
