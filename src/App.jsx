@@ -1,3 +1,5 @@
+import { CartProvider } from './context/CartContext'
+import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -6,6 +8,8 @@ import Products from './components/Products'
 import Testimonials from './components/Testimonials'
 import Order from './components/Order'
 import Footer from './components/Footer'
+import CartDrawer from './components/CartDrawer'
+import LoginModal from './components/LoginModal'
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26">
@@ -15,31 +19,35 @@ const WhatsAppIcon = () => (
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <PostresDestacados />
-        <Products />
-        <Testimonials />
-        <Order />
-      </main>
-      <Footer />
+    <AuthProvider>
+      <CartProvider>
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <PostresDestacados />
+          <Products />
+          <Testimonials />
+          <Order />
+        </main>
+        <Footer />
+        <CartDrawer />
+        <LoginModal />
 
-      <a
-        href="https://wa.me/59898590509"
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 left-6 z-50 flex items-center gap-0 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:bg-[#20b958] transition-all duration-300 hover:shadow-xl group hover:gap-3 hover:pl-4 hover:pr-5 overflow-hidden"
-        aria-label="Contactar a Juan Manuel por WhatsApp"
-      >
-        <WhatsAppIcon />
-        <div className="leading-tight max-w-0 group-hover:max-w-[120px] overflow-hidden transition-all duration-300">
-          <p className="text-[10px] font-medium opacity-80 tracking-wide uppercase whitespace-nowrap">Vendedor</p>
-          <p className="text-sm font-semibold whitespace-nowrap">Juan Manuel</p>
-        </div>
-      </a>
-    </>
+        <a
+          href="https://wa.me/59898590509"
+          target="_blank"
+          rel="noreferrer"
+          className="fixed bottom-6 left-6 z-40 flex items-center gap-0 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:bg-[#20b958] transition-all duration-300 hover:shadow-xl group hover:gap-3 hover:pl-4 hover:pr-5 overflow-hidden"
+          aria-label="Contactar a Juan Manuel por WhatsApp"
+        >
+          <WhatsAppIcon />
+          <div className="leading-tight max-w-0 group-hover:max-w-[120px] overflow-hidden transition-all duration-300">
+            <p className="text-[10px] font-medium opacity-80 tracking-wide uppercase whitespace-nowrap">Vendedor</p>
+            <p className="text-sm font-semibold whitespace-nowrap">Juan Manuel</p>
+          </div>
+        </a>
+      </CartProvider>
+    </AuthProvider>
   )
 }

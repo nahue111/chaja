@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
-import { ShoppingBag } from 'lucide-react'
+import { ShoppingBag, Plus, Check } from 'lucide-react'
+import { useCart } from '../context/CartContext'
 
 const categories = {
   familia: {
@@ -230,6 +231,15 @@ const categories = {
 }
 
 function ProductCard({ product }) {
+  const { add } = useCart()
+  const [added, setAdded] = useState(false)
+
+  const handleAdd = () => {
+    add(product)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1500)
+  }
+
   return (
     <div className="group flex flex-col bg-white border border-cream-200/60 rounded-2xl overflow-hidden hover:shadow-[0_16px_40px_-12px_rgba(44,26,14,0.14)] transition-all duration-500">
       <div className="aspect-[4/3] overflow-hidden relative">
@@ -257,13 +267,17 @@ function ProductCard({ product }) {
 
         <p className="text-espresso-500 text-sm leading-relaxed mb-4 flex-1">{product.description}</p>
 
-        <a
-          href="#pedidos"
-          className="inline-flex items-center gap-2 self-start px-4 py-2.5 rounded-full bg-espresso-800 text-cream-50 text-xs font-medium hover:bg-espresso-700 transition-all duration-300 active:scale-[0.98]"
+        <button
+          onClick={handleAdd}
+          className={`inline-flex items-center gap-2 self-start px-4 py-2.5 rounded-full text-xs font-medium transition-all duration-300 active:scale-[0.98] ${
+            added
+              ? 'bg-green-600 text-white'
+              : 'bg-espresso-800 text-cream-50 hover:bg-espresso-700'
+          }`}
         >
-          <ShoppingBag size={12} strokeWidth={1.5} />
-          Pedir este
-        </a>
+          {added ? <Check size={12} strokeWidth={2} /> : <Plus size={12} strokeWidth={2} />}
+          {added ? 'Agregado' : 'Agregar al carrito'}
+        </button>
       </div>
     </div>
   )
