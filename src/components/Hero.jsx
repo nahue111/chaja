@@ -30,7 +30,7 @@ export default function Hero() {
     `transition-all duration-700 ease-out ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'}`
 
   return (
-    <div ref={wrapperRef} className="relative" style={{ height: '200vh' }}>
+    <div ref={wrapperRef} className="relative h-[130vh] md:h-[200vh]">
       <div className="sticky top-0 w-full overflow-hidden bg-espresso-900" style={{ height: '100dvh' }}>
 
         {/* Video */}
