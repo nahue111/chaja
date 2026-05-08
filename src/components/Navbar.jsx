@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ShoppingBag, User } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 
@@ -17,6 +17,8 @@ export default function Navbar() {
   const [visible, setVisible] = useState(false)
   const { totalItems, setOpen: setCartOpen } = useCart()
   const { user, setLoginOpen, logout } = useAuth()
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 300)
@@ -25,19 +27,21 @@ export default function Navbar() {
     return () => { clearTimeout(t); window.removeEventListener('scroll', onScroll) }
   }, [])
 
-  const iconCls = `transition-colors duration-300 ${scrolled ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`
+  const solid = !isHome || scrolled
+
+  const iconCls = `transition-colors duration-300 ${solid ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-cream-50/95 backdrop-blur-md shadow-[0_1px_0_rgba(44,26,14,0.08)]' : 'bg-transparent'
+        solid ? 'bg-cream-50/95 backdrop-blur-md shadow-[0_1px_0_rgba(44,26,14,0.08)]' : 'bg-transparent'
       } ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
       style={{ transition: 'opacity 0.8s ease, transform 0.8s ease, background-color 0.5s ease, box-shadow 0.5s ease' }}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
         <a href="#" className="flex items-center gap-2.5">
           <img src="/logo.png" alt="Chajá Bistro" className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover shrink-0" />
-          <span className={`font-display text-xl md:text-2xl font-semibold tracking-tight transition-colors duration-300 ${scrolled ? 'text-espresso-800' : 'text-cream-50'}`}>
+          <span className={`font-display text-xl md:text-2xl font-semibold tracking-tight transition-colors duration-300 ${solid ? 'text-espresso-800' : 'text-cream-50'}`}>
             Chajá<span className="font-normal italic"> Bistro</span>
           </span>
         </a>
@@ -46,12 +50,12 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <li key={link.label}>
               {link.isRoute ? (
-                <Link to={link.href} className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${scrolled ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`}>
+                <Link to={link.href} className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${solid ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`}>
                   {link.label}
                   <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-amber transition-all duration-300 group-hover:w-full" />
                 </Link>
               ) : (
-                <a href={link.href} className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${scrolled ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`}>
+                <a href={link.href} className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${solid ? 'text-espresso-600 hover:text-espresso-900' : 'text-cream-200 hover:text-white'}`}>
                   {link.label}
                   <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-amber transition-all duration-300 group-hover:w-full" />
                 </a>
@@ -80,7 +84,7 @@ export default function Navbar() {
             {user ? (
               <button
                 onClick={logout}
-                className={`text-xs font-medium px-3 py-2 rounded-full transition-colors duration-300 ${scrolled ? 'text-espresso-500 hover:text-espresso-800' : 'text-cream-300 hover:text-white'}`}
+                className={`text-xs font-medium px-3 py-2 rounded-full transition-colors duration-300 ${solid ? 'text-espresso-500 hover:text-espresso-800' : 'text-cream-300 hover:text-white'}`}
               >
                 {user.name} · Salir
               </button>
@@ -97,13 +101,13 @@ export default function Navbar() {
 
           <Link
             to="/carta"
-            className={`hidden md:inline-flex items-center gap-2 ml-1 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98] ${scrolled ? 'bg-espresso-800 text-cream-50 hover:bg-espresso-700' : 'bg-white/15 backdrop-blur-sm border border-white/25 text-white hover:bg-white/25'}`}
+            className={`hidden md:inline-flex items-center gap-2 ml-1 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98] ${solid ? 'bg-espresso-800 text-cream-50 hover:bg-espresso-700' : 'bg-white/15 backdrop-blur-sm border border-white/25 text-white hover:bg-white/25'}`}
           >
             Hacer pedido
           </Link>
 
           <button
-            className={`md:hidden p-2 transition-colors duration-300 ${scrolled ? 'text-espresso-800' : 'text-white'}`}
+            className={`md:hidden p-2 transition-colors duration-300 ${solid ? 'text-espresso-800' : 'text-white'}`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Menu"
           >
