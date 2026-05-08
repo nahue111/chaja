@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, Plus, Minus, Check, ShoppingBag } from 'lucide-react'
 import Layout from '../components/Layout'
 import { useCart } from '../context/CartContext'
@@ -42,11 +42,16 @@ const categories = {
       { id: 'x12-frutilla', name: 'Frutilla', tag: 'Caja x12', weight: '120 gr c/u', price: 1200, description: 'Caja de 12 Chajá individuales con frutilla. Perfectos para compartir en cualquier celebración.', img: '/catalogo/x12-frutilla.webp' },
     ],
   },
-  otros: {
-    label: 'Alfajores & Tortas',
+  alfajores: {
+    label: 'Alfajores',
     products: [
       { id: 'alfajor-yoyo', name: 'Alfajor Chajá tipo Yoyo', tag: 'Alfajor', weight: 'Individual · Caja x12', price: 100, description: 'Alfajores Chajá tipo yoyo: chocolate, maicena y chocolate blanco. Disponibles por unidad o caja.', img: '/catalogo/alfajores-yoyo.webp' },
       { id: 'alfajor-caja', name: 'Alfajor de Maicena', tag: 'Alfajor', weight: 'Individual', price: 100, description: 'Alfajor de maicena común o con maní. También disponible en caja x12.', img: '/catalogo/alfajores-caja.webp' },
+    ],
+  },
+  tortas: {
+    label: 'Tortas',
+    products: [
       { id: 'torta-charlotte', name: 'Charlotte de Frutos del Bosque', tag: 'Repostero', weight: '6 a 8 porciones', price: 800, description: 'Postre repostero estilo charlotte con vainillas y crema de frutos del bosque.', img: '/catalogo/torta-charlotte.webp' },
       { id: 'torta-oreo', name: 'Torta Oreo', tag: 'Repostero', weight: '6 a 8 porciones', price: 800, description: 'Postre repostero con Oreos, crema y chocolate.', img: '/catalogo/torta-oreo.webp' },
       { id: 'torta-profiteroles', name: 'Profiteroles de DDL', tag: 'Repostero', weight: '6 a 8 porciones', price: 900, description: 'Postre repostero de profiteroles con dulce de leche. Crujiente por fuera, suave por dentro.', img: '/catalogo/torta-profiteroles.webp' },
@@ -127,7 +132,11 @@ function ProductCard({ product }) {
 }
 
 export default function CartaPage() {
-  const [activeTab, setActiveTab] = useState('familia')
+  const [searchParams] = useSearchParams()
+  const initialTab = searchParams.get('tab')
+  const [activeTab, setActiveTab] = useState(
+    initialTab && categories[initialTab] ? initialTab : 'familia'
+  )
   const { totalItems, setOpen } = useCart()
 
   return (

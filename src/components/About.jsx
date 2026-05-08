@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { X } from 'lucide-react'
+
 const pillars = [
   { number: '01', title: 'Merengue artesanal', body: 'Batido a mano durante 40 minutos hasta lograr la textura y el brillo exactos. Sin atajos.' },
   { number: '02', title: 'Crema chantilly', body: 'Crema doble uruguaya batida al momento del montaje. Nunca preelaborada.' },
@@ -5,7 +8,10 @@ const pillars = [
 ]
 
 export default function About() {
+  const [lightbox, setLightbox] = useState(null)
+
   return (
+    <>
     <section id="chaja" className="bg-cream-50 py-24 md:py-36 overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -23,7 +29,11 @@ export default function About() {
                 '/catalogo/x12-frutilla.webp',
                 '/catalogo/familia-chocolate.webp',
               ].map((src, i) => (
-                <div key={i} className="rounded-xl overflow-hidden bg-cream-200">
+                <div
+                  key={i}
+                  className="rounded-xl overflow-hidden bg-cream-200 cursor-zoom-in"
+                  onClick={() => setLightbox(src)}
+                >
                   <img
                     src={src}
                     alt=""
@@ -70,5 +80,26 @@ export default function About() {
         </div>
       </div>
     </section>
+
+    {lightbox && (
+      <div
+        className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso-900/90 backdrop-blur-md p-4 md:p-10"
+        onClick={() => setLightbox(null)}
+      >
+        <button
+          onClick={() => setLightbox(null)}
+          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+        >
+          <X size={18} className="text-white" />
+        </button>
+        <img
+          src={lightbox}
+          alt=""
+          className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>
+    )}
+    </>
   )
 }

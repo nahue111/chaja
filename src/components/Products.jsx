@@ -6,7 +6,8 @@ const categories = [
   { key: 'helado', label: 'Chajá Helado', sub: '3 variedades', img: '/catalogo/helado-caja.webp' },
   { key: 'x4', label: 'Cajas x4', sub: '4 variedades', img: '/catalogo/x4-durazno.webp' },
   { key: 'x12', label: 'Cajas x12', sub: '3 variedades', img: '/catalogo/x12-frutilla.webp' },
-  { key: 'otros', label: 'Alfajores & Tortas', sub: '8 variedades', img: '/catalogo/alfajores-yoyo.webp' },
+  { key: 'alfajores', label: 'Alfajores', sub: '2 variedades', img: '/catalogo/alfajores-yoyo.webp' },
+  { key: 'tortas', label: 'Tortas', sub: '6 variedades', img: '/catalogo/torta-charlotte.webp' },
 ]
 
 export default function Products() {
@@ -40,11 +41,11 @@ export default function Products() {
         </div>
 
         {/* Category tiles */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map((cat) => (
             <Link
               key={cat.key}
-              to="/carta"
+              to={`/carta?tab=${cat.key}`}
               className="group relative rounded-2xl overflow-hidden aspect-[3/4] md:aspect-[2/3]"
             >
               <img
