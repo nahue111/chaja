@@ -2,11 +2,11 @@ import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const categories = [
-  { key: 'familia', label: 'Tortas Familiares', sub: '7 variedades', img: '/catalogo/familia-clasica.png' },
-  { key: 'helado', label: 'Chajá Helado', sub: '3 variedades', img: '/catalogo/helado-caja.png' },
-  { key: 'x4', label: 'Cajas x4', sub: '4 variedades', img: '/catalogo/x4-durazno.png' },
-  { key: 'x12', label: 'Cajas x12', sub: '3 variedades', img: '/catalogo/x12-frutilla.png' },
-  { key: 'otros', label: 'Alfajores & Tortas', sub: '8 variedades', img: '/catalogo/alfajores-yoyo.png' },
+  { key: 'familia', label: 'Tortas Familiares', sub: '7 variedades', img: '/catalogo/familia-clasica.webp' },
+  { key: 'helado', label: 'Chajá Helado', sub: '3 variedades', img: '/catalogo/helado-caja.webp' },
+  { key: 'x4', label: 'Cajas x4', sub: '4 variedades', img: '/catalogo/x4-durazno.webp' },
+  { key: 'x12', label: 'Cajas x12', sub: '3 variedades', img: '/catalogo/x12-frutilla.webp' },
+  { key: 'otros', label: 'Alfajores & Tortas', sub: '8 variedades', img: '/catalogo/alfajores-yoyo.webp' },
 ]
 
 export default function Products() {

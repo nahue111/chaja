@@ -14,14 +14,14 @@ export default function About() {
           <div className="relative">
             <div className="grid grid-cols-2 gap-2" style={{ gridTemplateRows: 'repeat(4, 160px)' }}>
               {[
-                '/catalogo/familia-clasica.png',
-                '/catalogo/helado-caja.png',
-                '/catalogo/x4-durazno.png',
-                '/catalogo/alfajores-yoyo.png',
-                '/catalogo/torta-charlotte.png',
-                '/catalogo/familia-gold.png',
-                '/catalogo/x12-frutilla.png',
-                '/catalogo/familia-chocolate.png',
+                '/catalogo/familia-clasica.webp',
+                '/catalogo/helado-caja.webp',
+                '/catalogo/x4-durazno.webp',
+                '/catalogo/alfajores-yoyo.webp',
+                '/catalogo/torta-charlotte.webp',
+                '/catalogo/familia-gold.webp',
+                '/catalogo/x12-frutilla.webp',
+                '/catalogo/familia-chocolate.webp',
               ].map((src, i) => (
                 <div key={i} className="rounded-xl overflow-hidden">
                   <img
