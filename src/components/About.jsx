@@ -23,11 +23,12 @@ export default function About() {
                 '/catalogo/x12-frutilla.webp',
                 '/catalogo/familia-chocolate.webp',
               ].map((src, i) => (
-                <div key={i} className="rounded-xl overflow-hidden">
+                <div key={i} className="rounded-xl overflow-hidden bg-cream-200">
                   <img
                     src={src}
                     alt=""
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover hover:scale-105 transition-[transform,opacity] duration-500 opacity-0"
+                    onLoad={(e) => e.target.classList.replace('opacity-0', 'opacity-100')}
                   />
                 </div>
               ))}

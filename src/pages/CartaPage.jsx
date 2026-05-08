@@ -73,12 +73,13 @@ function ProductCard({ product }) {
 
   return (
     <div className="group flex flex-col bg-white border border-cream-200/60 rounded-2xl overflow-hidden hover:shadow-[0_12px_32px_-8px_rgba(44,26,14,0.12)] transition-all duration-500">
-      <div className="aspect-[4/3] overflow-hidden relative">
+      <div className="aspect-[4/3] overflow-hidden relative bg-cream-200">
         <img
           src={product.img}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Torta_chaj%C3%A1.jpg' }}
+          className="w-full h-full object-cover transition-[transform,opacity] duration-500 group-hover:scale-105 opacity-0"
+          onLoad={(e) => e.target.classList.replace('opacity-0', 'opacity-100')}
+          onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Torta_chaj%C3%A1.jpg'; e.target.classList.replace('opacity-0', 'opacity-100') }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-espresso-900/30 to-transparent" />
         <span className="absolute top-3 left-3 text-[10px] font-medium tracking-[0.16em] uppercase px-3 py-1.5 rounded-full bg-amber/90 text-espresso-900">

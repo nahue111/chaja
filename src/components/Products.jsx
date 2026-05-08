@@ -50,7 +50,8 @@ export default function Products() {
               <img
                 src={cat.img}
                 alt={cat.label}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-[transform,opacity] duration-500 group-hover:scale-105 opacity-0"
+                onLoad={(e) => e.target.classList.replace('opacity-0', 'opacity-100')}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-espresso-900/80 via-espresso-900/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
