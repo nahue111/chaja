@@ -3,7 +3,7 @@ const testimonials = [
     quote: 'Lo pedí medio sin esperar mucho y terminé comprando tres más al mes siguiente. El merengue es adictivo, no sé cómo lo hacen.',
     name: 'Lucía Fontana',
     role: 'Cliente, Montevideo',
-    avatar: 'https://i.pravatar.cc/80?img=47',
+    avatar: 'https://i.pravatar.cc/80?img=5',
   },
   {
     quote: 'Encargué 4 para el cumpleaños de mi madre. Llegaron impecables, en su caja, y el sabor era exactamente el que recordaba de chica.',
