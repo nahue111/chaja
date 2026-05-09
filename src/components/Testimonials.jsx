@@ -1,7 +1,7 @@
 const testimonials = [
   {
-    quote: 'Llevé un Chajá Clásico a una reunión familiar y fue lo único que desapareció antes de que yo pudiera servir el asado. Impresionante.',
-    name: 'Valentina Iriarte',
+    quote: 'Lo pedí medio sin esperar mucho y terminé comprando tres más al mes siguiente. El merengue es adictivo, no sé cómo lo hacen.',
+    name: 'Lucía Fontana',
     role: 'Cliente, Montevideo',
     avatar: 'https://i.pravatar.cc/80?img=47',
   },
@@ -21,8 +21,8 @@ const testimonials = [
 
 const stats = [
   { value: '4.200+', label: 'Pedidos entregados' },
-  { value: '97.4%', label: 'Satisfacción del cliente' },
-  { value: '38', label: 'Departamentos alcanzados' },
+  { value: '98.7%', label: 'Satisfacción del cliente' },
+  { value: '19', label: 'Departamentos alcanzados' },
 ]
 
 export default function Testimonials() {
