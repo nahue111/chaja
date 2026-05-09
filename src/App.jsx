@@ -12,7 +12,7 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <PostresDestacados />
+        {/* <PostresDestacados /> */}
         <Products />
         <Testimonials />
         <Order />
