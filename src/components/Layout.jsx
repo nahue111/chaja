@@ -28,8 +28,8 @@ export default function Layout({ children }) {
       >
         <WhatsAppIcon />
         <div className="leading-tight max-w-0 group-hover:max-w-[120px] overflow-hidden transition-all duration-300">
-          <p className="text-[10px] font-medium opacity-80 tracking-wide uppercase whitespace-nowrap">Vendedor</p>
-          <p className="text-sm font-semibold whitespace-nowrap">Juan Manuel</p>
+          <p className="text-[10px] font-medium opacity-80 tracking-wide uppercase whitespace-nowrap">Información</p>
+          <p className="text-sm font-semibold whitespace-nowrap">Chajá Bistro</p>
         </div>
       </a>
     </>
