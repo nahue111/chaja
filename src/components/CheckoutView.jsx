@@ -74,7 +74,7 @@ export default function CheckoutView() {
           <a href="#" className="flex items-center gap-2">
             <img src="/logo.png" alt="Chajá Bistro" className="w-7 h-7 rounded-full object-cover" />
             <span className="font-display text-lg font-semibold text-espresso-800">
-              Chajá<span className="font-normal italic"> Bistro</span>
+              Chajá
             </span>
           </a>
         </div>

@@ -27,7 +27,7 @@ export default function Footer() {
             <div className="flex items-center gap-2.5 mb-4">
               <img src="/logo.png" alt="Chajá Bistro" className="w-9 h-9 rounded-full object-cover shrink-0" />
               <p className="font-display text-2xl text-cream-50 font-semibold tracking-tight">
-                Chajá<span className="italic font-normal"> Bistro</span>
+                Chajá
               </p>
             </div>
             <p className="text-sm leading-relaxed max-w-[36ch] mb-7">
@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
-          <p>&copy; 2026 Chajá Bistro. Paysandú, Uruguay. Todos los derechos reservados.</p>
+          <p>&copy; 2026 Chajá. Paysandú, Uruguay. Todos los derechos reservados.</p>
           <p>
             Hecho con cuidado en Uruguay
             <span className="mx-2 opacity-30">·</span>

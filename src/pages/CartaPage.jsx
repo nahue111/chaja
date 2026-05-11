@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Plus, Minus, Check, ShoppingBag } from 'lucide-react'
+import { Plus, Minus, Check, ShoppingBag } from 'lucide-react'
 import Layout from '../components/Layout'
 import { useCart } from '../context/CartContext'
 
@@ -146,13 +146,6 @@ export default function CartaPage() {
         {/* Page header */}
         <div className="bg-cream-50 border-b border-cream-200">
           <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-8 md:py-12">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-espresso-500 hover:text-espresso-800 transition-colors text-sm mb-6"
-            >
-              <ArrowLeft size={15} />
-              Volver al inicio
-            </Link>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-3">

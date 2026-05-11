@@ -6,6 +6,7 @@ import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import App from './App.jsx'
 import CartaPage from './pages/CartaPage.jsx'
+import ContactoPage from './pages/ContactoPage.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -15,8 +16,9 @@ createRoot(document.getElementById('root')).render(
         <CartProvider>
           <ScrollToTop />
           <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/carta" element={<CartaPage />} />
+            <Route path="/" element={<CartaPage />} />
+            <Route path="/nosotros" element={<App />} />
+            <Route path="/contacto" element={<ContactoPage />} />
           </Routes>
         </CartProvider>
       </AuthProvider>
