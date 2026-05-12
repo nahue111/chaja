@@ -3,6 +3,7 @@ import Footer from './Footer'
 import CartDrawer from './CartDrawer'
 import LoginModal from './LoginModal'
 import CheckoutView from './CheckoutView'
+import { useAuth } from '../context/AuthContext'
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26">
@@ -11,6 +12,8 @@ const WhatsAppIcon = () => (
 )
 
 export default function Layout({ children }) {
+  const { toast } = useAuth()
+
   return (
     <>
       <Navbar />
@@ -19,6 +22,43 @@ export default function Layout({ children }) {
       <CartDrawer />
       <LoginModal />
       <CheckoutView />
+      <div className={`fixed inset-0 z-[80] flex items-center justify-center transition-all duration-700 pointer-events-none ${toast ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="absolute inset-0 bg-espresso-900/60 backdrop-blur-sm" />
+        <div className={`relative flex flex-col items-center text-center transition-all duration-700 ${toast ? 'scale-100 translate-y-0' : 'scale-90 translate-y-6'}`}>
+          {/* Glow */}
+          <div className="absolute inset-0 rounded-[2rem] blur-3xl opacity-30" style={{ background: 'radial-gradient(circle, #D4A843 0%, transparent 70%)' }} />
+
+          <div className="relative rounded-[2rem] overflow-hidden px-14 py-12" style={{ background: 'linear-gradient(160deg, #1a0e06 0%, #2C1A0E 50%, #1a0e06 100%)', border: '1px solid rgba(212,168,67,0.2)', boxShadow: '0 40px 100px -20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(212,168,67,0.15)' }}>
+            {/* Top shimmer */}
+            <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(212,168,67,0.6), transparent)' }} />
+
+            {/* Logo */}
+            <div className="flex justify-center mb-6">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full blur-xl opacity-50" style={{ background: '#D4A843' }} />
+                <img src="/logo.png" alt="" className="relative w-20 h-20 rounded-full shadow-2xl" />
+              </div>
+            </div>
+
+            {/* Check badge */}
+            <div className="flex justify-center mb-5">
+              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full" style={{ background: 'rgba(212,168,67,0.1)', border: '1px solid rgba(212,168,67,0.25)' }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D4A843" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span className="text-xs font-medium tracking-widest uppercase" style={{ color: '#D4A843' }}>Acceso verificado</span>
+              </div>
+            </div>
+
+            <p className="font-display text-3xl font-semibold text-cream-50 mb-2">¡Bienvenido!</p>
+            <p className="text-cream-300/60 text-sm leading-relaxed">Sesión iniciada correctamente.<br />Ya podés hacer tu pedido.</p>
+
+            {/* Bottom line */}
+            <div className="mt-8 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(212,168,67,0.3), transparent)' }} />
+          </div>
+        </div>
+      </div>
+
       <a
         href="https://wa.me/59898590509"
         target="_blank"
