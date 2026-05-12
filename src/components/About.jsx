@@ -44,7 +44,7 @@ export default function About() {
               ))}
             </div>
             <div className="absolute -bottom-6 -right-4 md:-right-8 bg-espresso-800 text-cream-50 rounded-2xl px-6 py-5 shadow-[0_20px_40px_-10px_rgba(44,26,14,0.4)]">
-              <p className="font-mono text-3xl font-medium text-amber">72+</p>
+              <p className="font-mono text-3xl font-medium text-amber">99+</p>
               <p className="text-cream-300 text-xs tracking-wide mt-1">Años de receta</p>
             </div>
           </div>
