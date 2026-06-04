@@ -164,7 +164,7 @@ export default function CartaPage() {
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-espresso-800 text-cream-50 text-sm font-medium hover:bg-espresso-700 transition-colors self-start md:self-auto"
                 >
                   <ShoppingBag size={14} strokeWidth={1.5} />
-                  Ver carrito · {totalItems}
+                  Ver carrito
                 </button>
               )}
             </div>
