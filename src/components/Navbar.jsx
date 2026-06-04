@@ -39,7 +39,7 @@ export default function Navbar() {
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
         <a href="#" className="flex items-center gap-2.5">
-          <img src="/logo.png" alt="Chajá Bistro" className="h-12 md:h-14 w-auto shrink-0 select-none" style={{ clipPath: 'circle(48% at 50% 50%)' }} />
+          <img src="/logo.png" alt="Chajá Bistro" className="h-14 md:h-16 w-auto shrink-0 select-none" />
           <span className={`font-display text-xl md:text-2xl font-semibold tracking-tight transition-colors duration-300 ${solid ? 'text-espresso-800' : 'text-cream-50'}`}>
             Chajá
           </span>
