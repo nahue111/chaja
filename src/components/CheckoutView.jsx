@@ -32,8 +32,9 @@ export default function CheckoutView() {
   const discount = coupon ? Math.round(totalPrice * coupon.pct) : 0
   const effectiveShipping = delivery === 'retiro' ? 0 : shipping
   const baseTotal = totalPrice - discount + effectiveShipping
-  const maxRedeemable = user && medals > 0 ? Math.min(medals, Math.floor(baseTotal / 60)) : 0
-  const medalDiscount = usingMedals && maxRedeemable > 0 ? maxRedeemable * 60 : 0
+  // 1 medal = $1 discount
+  const maxRedeemable = user && medals > 0 ? Math.min(medals, Math.floor(baseTotal)) : 0
+  const medalDiscount = usingMedals && maxRedeemable > 0 ? maxRedeemable : 0
   const effectiveTotal = baseTotal - medalDiscount
   const medalsToEarn = Math.floor((medalProgress + effectiveTotal) / 60)
 
@@ -296,7 +297,7 @@ export default function CheckoutView() {
                           <span className="text-sm font-medium" style={{ color: '#2C1A0E' }}>
                             {medals} medalla{medals !== 1 ? 's' : ''} disponibles
                           </span>
-                          <span className="text-xs" style={{ color: '#7A5230' }}>= {fmt(maxRedeemable * 60)} de descuento</span>
+                          <span className="text-xs" style={{ color: '#7A5230' }}>= ${maxRedeemable} de descuento</span>
                         </div>
                         <button
                           onClick={() => setUsingMedals(v => !v)}
@@ -309,9 +310,13 @@ export default function CheckoutView() {
                           />
                         </button>
                       </div>
-                      {usingMedals && (
+                      {usingMedals ? (
                         <p className="text-xs mt-2 font-medium" style={{ color: '#C8860A' }}>
-                          − {fmt(medalDiscount)} aplicado · usás {maxRedeemable} medalla{maxRedeemable !== 1 ? 's' : ''}
+                          − ${medalDiscount} aplicado · usás {maxRedeemable} medalla{maxRedeemable !== 1 ? 's' : ''}
+                        </p>
+                      ) : (
+                        <p className="text-xs mt-2" style={{ color: '#7A5230' }}>
+                          Ganarás <span className="font-semibold" style={{ color: '#C8860A' }}>+{medalsToEarn} medalla{medalsToEarn !== 1 ? 's' : ''}</span> con esta compra
                         </p>
                       )}
                     </div>
@@ -339,7 +344,7 @@ export default function CheckoutView() {
                 )}
                 {medalDiscount > 0 && (
                   <div className="flex justify-between text-sm">
-                    <span style={{ color: '#C8860A' }}>Medallas ({maxRedeemable}×$60)</span>
+                    <span style={{ color: '#C8860A' }}>Medallas ({maxRedeemable}×$1)</span>
                     <span className="font-mono" style={{ color: '#C8860A' }}>− {fmt(medalDiscount)}</span>
                   </div>
                 )}
@@ -360,7 +365,7 @@ export default function CheckoutView() {
                   <span className="font-display text-base text-espresso-800 font-semibold">Total</span>
                   <span className="font-mono text-xl font-semibold text-espresso-800">{fmt(effectiveTotal)}</span>
                 </div>
-                {user && medals === 0 && medalsToEarn > 0 && (
+                {user && medalsToEarn > 0 && !usingMedals && (
                   <div className="flex items-center gap-1.5 pt-1">
                     <Medal size={11} strokeWidth={2} style={{ color: '#C8860A' }} />
                     <p className="text-xs" style={{ color: '#7A5230' }}>
