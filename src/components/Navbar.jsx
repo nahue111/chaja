@@ -111,12 +111,21 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link
-            to="/"
-            className={`hidden md:inline-flex items-center gap-2 ml-1 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98] ${solid ? 'bg-espresso-800 text-cream-50 hover:bg-espresso-700' : 'bg-white/15 backdrop-blur-sm border border-white/25 text-white hover:bg-white/25'}`}
-          >
-            Hacer pedido
-          </Link>
+          {user ? (
+            <Link
+              to="/"
+              className={`hidden md:inline-flex items-center gap-2 ml-1 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98] ${solid ? 'bg-espresso-800 text-cream-50 hover:bg-espresso-700' : 'bg-white/15 backdrop-blur-sm border border-white/25 text-white hover:bg-white/25'}`}
+            >
+              Hacer pedido
+            </Link>
+          ) : (
+            <button
+              onClick={() => setLoginOpen(true)}
+              className={`hidden md:inline-flex items-center gap-2 ml-1 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98] ${solid ? 'bg-espresso-800 text-cream-50 hover:bg-espresso-700' : 'bg-white/15 backdrop-blur-sm border border-white/25 text-white hover:bg-white/25'}`}
+            >
+              Iniciar sesión
+            </button>
+          )}
 
           <button
             className={`md:hidden p-2 transition-colors duration-300 ${solid ? 'text-espresso-800' : 'text-white'}`}
