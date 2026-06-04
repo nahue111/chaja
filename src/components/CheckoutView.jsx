@@ -7,13 +7,14 @@ const fmt = (n) => `$ ${n.toLocaleString('es-UY')}`
 
 export default function CheckoutView() {
   const { items, totalPrice, shipping, setCheckoutOpen, setOpen, checkoutOpen } = useCart()
-  const { user, earnMedals } = useAuth()
+  const { user, earnMedals, medals, medalProgress, redeemMedals } = useAuth()
   const [delivery, setDelivery] = useState('envio')
   const [confirmed, setConfirmed] = useState(false)
-  const [earnedResult, setEarnedResult] = useState({ newMedals: 0, totalMedals: 0, progress: 0 })
+  const [earnedResult, setEarnedResult] = useState({ newMedals: 0, totalMedals: 0, progress: 0, usedMedals: 0 })
   const [couponInput, setCouponInput] = useState('')
   const [coupon, setCoupon] = useState(null)
   const [couponError, setCouponError] = useState('')
+  const [usingMedals, setUsingMedals] = useState(false)
 
   const VALID_COUPONS = { 'CHAJA10': { label: '10% de descuento', pct: 0.10 }, 'BISTRO15': { label: '15% de descuento', pct: 0.15 } }
 
@@ -30,7 +31,11 @@ export default function CheckoutView() {
 
   const discount = coupon ? Math.round(totalPrice * coupon.pct) : 0
   const effectiveShipping = delivery === 'retiro' ? 0 : shipping
-  const effectiveTotal = totalPrice - discount + effectiveShipping
+  const baseTotal = totalPrice - discount + effectiveShipping
+  const maxRedeemable = user && medals > 0 ? Math.min(medals, Math.floor(baseTotal / 60)) : 0
+  const medalDiscount = usingMedals && maxRedeemable > 0 ? maxRedeemable * 60 : 0
+  const effectiveTotal = baseTotal - medalDiscount
+  const medalsToEarn = Math.floor((medalProgress + effectiveTotal) / 60)
 
   if (!checkoutOpen) return null
 
@@ -40,7 +45,7 @@ export default function CheckoutView() {
   }
 
   if (confirmed) {
-    const { newMedals, totalMedals, progress } = earnedResult
+    const { newMedals, totalMedals, progress, usedMedals } = earnedResult
     return (
       <div className="fixed inset-0 bg-cream-50 z-[55] flex items-center justify-center p-6">
         <div className="text-center max-w-sm w-full">
@@ -51,36 +56,38 @@ export default function CheckoutView() {
           </p>
           <p className="text-espresso-400 text-xs mb-6">En breve nos contactamos por WhatsApp para coordinar la entrega.</p>
 
-          {/* Medals block — solo si está logueado */}
           {user && (
-            <div className="rounded-2xl px-6 py-5 mb-6 text-left" style={{ background: 'rgba(200,134,10,0.07)', border: '1px solid rgba(200,134,10,0.18)' }}>
-              {newMedals > 0 ? (
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: Math.min(newMedals, 8) }).map((_, i) => (
-                      <Medal key={i} size={18} strokeWidth={1.5} style={{ color: '#C8860A' }} />
-                    ))}
-                  </div>
-                  <p className="font-display text-lg font-semibold" style={{ color: '#C8860A' }}>
-                    +{newMedals} medalla{newMedals !== 1 ? 's' : ''}
-                  </p>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 mb-3">
-                  <Medal size={15} strokeWidth={1.5} style={{ color: '#C8860A' }} />
-                  <p className="text-sm font-medium" style={{ color: '#C8860A' }}>Medallas acumuladas</p>
+            <div className="rounded-2xl px-6 py-5 mb-6 text-left space-y-3" style={{ background: 'rgba(200,134,10,0.07)', border: '1px solid rgba(200,134,10,0.18)' }}>
+              <div className="flex items-center gap-2">
+                <Medal size={14} strokeWidth={1.5} style={{ color: '#C8860A' }} />
+                <p className="text-sm font-semibold" style={{ color: '#C8860A' }}>Tus medallas</p>
+              </div>
+
+              {usedMedals > 0 && (
+                <div className="flex justify-between text-xs" style={{ color: '#5C3D20' }}>
+                  <span>Usadas como descuento</span>
+                  <span className="font-mono font-bold">−{usedMedals}</span>
                 </div>
               )}
-
-              <div className="flex items-center justify-between text-xs mb-2" style={{ color: '#5C3D20' }}>
-                <span>Total: <span className="font-mono font-bold">{totalMedals}</span> medalla{totalMedals !== 1 ? 's' : ''}</span>
-                <span><span className="font-mono font-bold">{progress}</span>/60 para la próxima</span>
+              {newMedals > 0 && (
+                <div className="flex justify-between text-xs" style={{ color: '#5C3D20' }}>
+                  <span>Ganadas en esta compra</span>
+                  <span className="font-mono font-bold" style={{ color: '#C8860A' }}>+{newMedals}</span>
+                </div>
+              )}
+              <div className="flex justify-between text-sm font-semibold pt-1" style={{ borderTop: '1px solid rgba(200,134,10,0.15)', color: '#2C1A0E' }}>
+                <span>Saldo actual</span>
+                <span className="font-mono">{totalMedals} medalla{totalMedals !== 1 ? 's' : ''}</span>
               </div>
-              <div className="rounded-full overflow-hidden" style={{ background: 'rgba(200,134,10,0.15)', height: 6 }}>
-                <div
-                  className="h-full rounded-full transition-all duration-700"
-                  style={{ width: `${(progress / 60) * 100}%`, background: '#C8860A' }}
-                />
+
+              <div>
+                <div className="flex justify-between text-xs mb-1.5" style={{ color: '#7A5230' }}>
+                  <span>Progreso a la próxima</span>
+                  <span className="font-mono">{progress}/60 pesos</span>
+                </div>
+                <div className="rounded-full overflow-hidden" style={{ background: 'rgba(200,134,10,0.15)', height: 5 }}>
+                  <div className="h-full rounded-full transition-all duration-700" style={{ width: `${(progress / 60) * 100}%`, background: '#C8860A' }} />
+                </div>
               </div>
             </div>
           )}
@@ -275,6 +282,50 @@ export default function CheckoutView() {
                 )}
               </div>
 
+              {/* Medals section */}
+              {user && (
+                <div className="px-6 py-4 border-t border-cream-200">
+                  {medals > 0 ? (
+                    <div
+                      className="rounded-xl p-3.5"
+                      style={{ background: usingMedals ? 'rgba(200,134,10,0.08)' : 'rgba(200,134,10,0.04)', border: `1px solid ${usingMedals ? 'rgba(200,134,10,0.25)' : 'rgba(200,134,10,0.12)'}` }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Medal size={13} strokeWidth={2} style={{ color: '#C8860A' }} />
+                          <span className="text-sm font-medium" style={{ color: '#2C1A0E' }}>
+                            {medals} medalla{medals !== 1 ? 's' : ''} disponibles
+                          </span>
+                          <span className="text-xs" style={{ color: '#7A5230' }}>= {fmt(maxRedeemable * 60)} de descuento</span>
+                        </div>
+                        <button
+                          onClick={() => setUsingMedals(v => !v)}
+                          className="relative w-10 h-5.5 rounded-full transition-colors duration-200 flex-shrink-0"
+                          style={{ background: usingMedals ? '#C8860A' : '#D4C5AB', width: 40, height: 22 }}
+                        >
+                          <span
+                            className="absolute top-0.5 w-4.5 h-4.5 bg-white rounded-full shadow transition-transform duration-200"
+                            style={{ width: 18, height: 18, top: 2, left: usingMedals ? 20 : 2 }}
+                          />
+                        </button>
+                      </div>
+                      {usingMedals && (
+                        <p className="text-xs mt-2 font-medium" style={{ color: '#C8860A' }}>
+                          − {fmt(medalDiscount)} aplicado · usás {maxRedeemable} medalla{maxRedeemable !== 1 ? 's' : ''}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Medal size={12} strokeWidth={2} style={{ color: '#C8860A' }} />
+                      <p className="text-xs" style={{ color: '#7A5230' }}>
+                        Ganarás <span className="font-semibold" style={{ color: '#C8860A' }}>+{medalsToEarn} medalla{medalsToEarn !== 1 ? 's' : ''}</span> con esta compra
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="px-6 py-5 space-y-3 border-t border-cream-200 bg-cream-50/50">
                 <div className="flex justify-between text-sm">
                   <span className="text-espresso-500">Subtotal</span>
@@ -284,6 +335,12 @@ export default function CheckoutView() {
                   <div className="flex justify-between text-sm">
                     <span className="text-green-600">Descuento ({coupon.label})</span>
                     <span className="font-mono text-green-600">− {fmt(discount)}</span>
+                  </div>
+                )}
+                {medalDiscount > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span style={{ color: '#C8860A' }}>Medallas ({maxRedeemable}×$60)</span>
+                    <span className="font-mono" style={{ color: '#C8860A' }}>− {fmt(medalDiscount)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
@@ -303,13 +360,22 @@ export default function CheckoutView() {
                   <span className="font-display text-base text-espresso-800 font-semibold">Total</span>
                   <span className="font-mono text-xl font-semibold text-espresso-800">{fmt(effectiveTotal)}</span>
                 </div>
+                {user && medals === 0 && medalsToEarn > 0 && (
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <Medal size={11} strokeWidth={2} style={{ color: '#C8860A' }} />
+                    <p className="text-xs" style={{ color: '#7A5230' }}>
+                      Ganarás <span className="font-semibold" style={{ color: '#C8860A' }}>+{medalsToEarn} medalla{medalsToEarn !== 1 ? 's' : ''}</span> con esta compra
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="px-6 pb-6">
                 <button
                   onClick={() => {
+                    if (usingMedals && maxRedeemable > 0) redeemMedals(maxRedeemable)
                     const result = earnMedals(effectiveTotal)
-                    setEarnedResult(result)
+                    setEarnedResult({ ...result, usedMedals: usingMedals ? maxRedeemable : 0 })
                     setConfirmed(true)
                   }}
                   className="w-full py-3.5 rounded-full bg-espresso-800 text-cream-50 text-sm font-medium hover:bg-espresso-700 transition-colors active:scale-[0.98] shadow-md"

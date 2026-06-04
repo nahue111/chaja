@@ -1,4 +1,4 @@
-import { X, Minus, Plus, ShoppingBag, Trash2, ArrowRight } from 'lucide-react'
+import { X, Minus, Plus, ShoppingBag, Trash2, ArrowRight, Medal } from 'lucide-react'
 import { useCart, FREE_SHIPPING_THRESHOLD, SHIPPING_COST } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 
@@ -6,7 +6,7 @@ const fmt = (n) => `$ ${n.toLocaleString('es-UY')}`
 
 export default function CartDrawer() {
   const { items, remove, updateQty, totalItems, totalPrice, open, setOpen, setCheckoutOpen, setCatalogOpen } = useCart()
-  const { user, setLoginOpen } = useAuth()
+  const { user, setLoginOpen, medals, medalProgress } = useAuth()
 
   const remaining = FREE_SHIPPING_THRESHOLD - totalPrice
 
@@ -61,6 +61,23 @@ export default function CartDrawer() {
             <p className="text-xs text-green-700 font-medium">¡Envío gratis aplicado!</p>
           </div>
         )}
+
+        {/* Medals preview */}
+        {items.length > 0 && user && (() => {
+          const toEarn = Math.floor((medalProgress + totalPrice) / 60)
+          return toEarn > 0 ? (
+            <div className="px-6 py-2.5 border-b flex items-center gap-2" style={{ background: 'rgba(200,134,10,0.05)', borderColor: 'rgba(200,134,10,0.12)' }}>
+              <Medal size={12} strokeWidth={2} style={{ color: '#C8860A' }} />
+              <p className="text-xs" style={{ color: '#7A5230' }}>
+                Ganarás{' '}
+                <span className="font-semibold" style={{ color: '#C8860A' }}>
+                  +{toEarn} medalla{toEarn !== 1 ? 's' : ''}
+                </span>{' '}
+                con este pedido
+              </p>
+            </div>
+          ) : null
+        })()}
 
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {items.length === 0 ? (
