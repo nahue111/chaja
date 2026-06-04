@@ -39,7 +39,9 @@ export default function Navbar() {
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
         <a href="#" className="flex items-center gap-2.5">
-          <img src="/logo.png" alt="Chajá Bistro" className="h-14 md:h-16 w-auto shrink-0 select-none" />
+          <div className="rounded-full overflow-hidden shrink-0 select-none" style={{ width: 68, height: 68, background: '#FDFBF7' }}>
+            <img src="/logo.png" alt="Chajá Bistro" className="w-full h-full object-contain" />
+          </div>
           <span className={`font-display text-xl md:text-2xl font-semibold tracking-tight transition-colors duration-300 ${solid ? 'text-espresso-800' : 'text-cream-50'}`}>
             Chajá
           </span>
