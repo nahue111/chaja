@@ -39,9 +39,12 @@ export default function Navbar() {
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
         <a href="#" className="flex items-center gap-2.5">
-          <div className="rounded-full overflow-hidden shrink-0 select-none" style={{ width: 92, height: 92, background: '#FDFBF7' }}>
-            <img src="/logo.png" alt="Chajá Bistro" className="w-full h-full object-contain" />
-          </div>
+          <img
+            src="/logo.png"
+            alt="Chajá Bistro"
+            className="shrink-0 select-none"
+            style={{ width: 92, height: 92, borderRadius: '50%', objectFit: 'contain', background: '#FDFBF7' }}
+          />
           <span className={`font-display text-xl md:text-2xl font-semibold tracking-tight transition-colors duration-300 ${solid ? 'text-espresso-800' : 'text-cream-50'}`}>
             Chajá
           </span>
