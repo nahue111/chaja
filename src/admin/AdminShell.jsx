@@ -1,8 +1,19 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Package, ShoppingBag, RefreshCcw, Users, LogOut } from 'lucide-react'
+import { LayoutDashboard, Package, ShoppingBag, RefreshCcw, Users, LogOut, Shield, BarChart2, ClipboardList, Tag } from 'lucide-react'
 
-const NAV = [
+const NAV_ADMIN = [
   { path: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { path: '/admin/inventario', label: 'Inventario', icon: Package },
+  { path: '/admin/ventas', label: 'Ventas', icon: ShoppingBag },
+  { path: '/admin/restock', label: 'Historial Restock', icon: RefreshCcw },
+  { path: '/admin/clientes', label: 'Clientes', icon: Users },
+]
+
+const NAV_SUPER = [
+  { path: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { path: '/admin/pedidos', label: 'Pedidos', icon: ClipboardList },
+  { path: '/admin/metricas', label: 'Métricas', icon: BarChart2 },
+  { path: '/admin/productos', label: 'Productos', icon: Tag },
   { path: '/admin/inventario', label: 'Inventario', icon: Package },
   { path: '/admin/ventas', label: 'Ventas', icon: ShoppingBag },
   { path: '/admin/restock', label: 'Historial Restock', icon: RefreshCcw },
@@ -11,15 +22,20 @@ const NAV = [
 
 const TITLES = {
   '/admin': 'Panel General',
+  '/admin/pedidos': 'Gestión de Pedidos',
+  '/admin/metricas': 'Métricas',
+  '/admin/productos': 'Productos',
   '/admin/inventario': 'Inventario',
   '/admin/ventas': 'Ventas',
   '/admin/restock': 'Historial de Restock',
   '/admin/clientes': 'Clientes',
 }
 
-export default function AdminShell({ children, onLogout }) {
+export default function AdminShell({ children, onLogout, role }) {
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const isSuperAdmin = role === 'superadmin'
+  const nav = isSuperAdmin ? NAV_SUPER : NAV_ADMIN
 
   const now = new Date().toLocaleDateString('es-UY', {
     weekday: 'long', day: 'numeric', month: 'long',
@@ -37,8 +53,8 @@ export default function AdminShell({ children, onLogout }) {
           borderRight: '1px solid rgba(212,168,67,0.07)',
         }}
       >
-        {/* Logo */}
-        <div className="px-5 py-6" style={{ borderBottom: '1px solid rgba(212,168,67,0.07)' }}>
+        {/* Logo + role */}
+        <div className="px-5 py-5" style={{ borderBottom: '1px solid rgba(212,168,67,0.07)' }}>
           <div className="flex items-center gap-3">
             <img
               src="/logo.png"
@@ -48,14 +64,25 @@ export default function AdminShell({ children, onLogout }) {
             />
             <div className="min-w-0">
               <p className="font-display text-sm font-semibold leading-none" style={{ color: '#FDFBF7' }}>Chajá Bistro</p>
-              <p className="text-[9px] tracking-[0.2em] uppercase font-medium mt-1" style={{ color: '#C8860A' }}>Admin Panel</p>
+              <div className="flex items-center gap-1.5 mt-1.5">
+                {isSuperAdmin
+                  ? <Shield size={9} style={{ color: '#C8860A' }} />
+                  : null
+                }
+                <p
+                  className="text-[9px] tracking-[0.18em] uppercase font-semibold"
+                  style={{ color: isSuperAdmin ? '#C8860A' : 'rgba(237,224,200,0.4)' }}
+                >
+                  {isSuperAdmin ? 'Super Admin' : 'Admin Panel'}
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Nav */}
         <nav className="flex-1 py-4 px-3 space-y-0.5 overflow-y-auto">
-          {NAV.map(({ path, label, icon: Icon, exact }) => {
+          {nav.map(({ path, label, icon: Icon, exact }) => {
             const active = exact ? pathname === path : pathname.startsWith(path)
             return (
               <button
@@ -66,14 +93,12 @@ export default function AdminShell({ children, onLogout }) {
                   background: active ? 'rgba(200,134,10,0.1)' : 'transparent',
                   color: active ? '#C8860A' : 'rgba(237,224,200,0.45)',
                 }}
-                onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; if (!active) e.currentTarget.style.color = 'rgba(237,224,200,0.75)' }}
-                onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; if (!active) e.currentTarget.style.color = 'rgba(237,224,200,0.45)' }}
+                onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.color = 'rgba(237,224,200,0.75)' } }}
+                onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(237,224,200,0.45)' } }}
               >
                 <Icon size={14} strokeWidth={active ? 2 : 1.5} className="flex-shrink-0" />
                 <span className="flex-1 truncate">{label}</span>
-                {active && (
-                  <div className="w-1 h-3.5 rounded-full flex-shrink-0" style={{ background: '#C8860A' }} />
-                )}
+                {active && <div className="w-1 h-3.5 rounded-full flex-shrink-0" style={{ background: '#C8860A' }} />}
               </button>
             )
           })}
@@ -102,7 +127,6 @@ export default function AdminShell({ children, onLogout }) {
           <p className="text-sm capitalize" style={{ color: '#7A5230' }}>{now}</p>
         </header>
 
-        {/* Content */}
         <main className="flex-1 overflow-y-auto p-8">
           {children}
         </main>

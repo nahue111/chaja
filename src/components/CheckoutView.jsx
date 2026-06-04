@@ -1,15 +1,16 @@
 import { useState } from 'react'
-import { ArrowLeft, Truck, Store, CheckCircle } from 'lucide-react'
+import { ArrowLeft, Truck, Store, CheckCircle, Medal } from 'lucide-react'
 import { useCart, SHIPPING_COST, FREE_SHIPPING_THRESHOLD } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 
 const fmt = (n) => `$ ${n.toLocaleString('es-UY')}`
 
 export default function CheckoutView() {
-  const { items, totalPrice, shipping, grandTotal, setCheckoutOpen, setOpen, checkoutOpen } = useCart()
-  const { user } = useAuth()
+  const { items, totalPrice, shipping, setCheckoutOpen, setOpen, checkoutOpen } = useCart()
+  const { user, earnMedals } = useAuth()
   const [delivery, setDelivery] = useState('envio')
   const [confirmed, setConfirmed] = useState(false)
+  const [earnedResult, setEarnedResult] = useState({ newMedals: 0, totalMedals: 0, progress: 0 })
   const [couponInput, setCouponInput] = useState('')
   const [coupon, setCoupon] = useState(null)
   const [couponError, setCouponError] = useState('')
@@ -39,15 +40,51 @@ export default function CheckoutView() {
   }
 
   if (confirmed) {
+    const { newMedals, totalMedals, progress } = earnedResult
     return (
       <div className="fixed inset-0 bg-cream-50 z-[55] flex items-center justify-center p-6">
-        <div className="text-center max-w-sm">
-          <CheckCircle size={56} className="text-green-500 mx-auto mb-6" strokeWidth={1.5} />
-          <h2 className="font-display text-3xl text-espresso-800 font-semibold mb-3">¡Pedido recibido!</h2>
-          <p className="text-espresso-500 text-sm leading-relaxed mb-2">
+        <div className="text-center max-w-sm w-full">
+          <CheckCircle size={48} className="text-green-500 mx-auto mb-5" strokeWidth={1.5} />
+          <h2 className="font-display text-3xl text-espresso-800 font-semibold mb-2">¡Pedido recibido!</h2>
+          <p className="text-espresso-500 text-sm leading-relaxed mb-1">
             Gracias, <span className="font-medium text-espresso-700">{user?.name}</span>. Tu pedido fue registrado con éxito.
           </p>
-          <p className="text-espresso-400 text-xs mb-8">En breve nos contactamos por WhatsApp para coordinar la entrega.</p>
+          <p className="text-espresso-400 text-xs mb-6">En breve nos contactamos por WhatsApp para coordinar la entrega.</p>
+
+          {/* Medals block — solo si está logueado */}
+          {user && (
+            <div className="rounded-2xl px-6 py-5 mb-6 text-left" style={{ background: 'rgba(200,134,10,0.07)', border: '1px solid rgba(200,134,10,0.18)' }}>
+              {newMedals > 0 ? (
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: Math.min(newMedals, 8) }).map((_, i) => (
+                      <Medal key={i} size={18} strokeWidth={1.5} style={{ color: '#C8860A' }} />
+                    ))}
+                  </div>
+                  <p className="font-display text-lg font-semibold" style={{ color: '#C8860A' }}>
+                    +{newMedals} medalla{newMedals !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 mb-3">
+                  <Medal size={15} strokeWidth={1.5} style={{ color: '#C8860A' }} />
+                  <p className="text-sm font-medium" style={{ color: '#C8860A' }}>Medallas acumuladas</p>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between text-xs mb-2" style={{ color: '#5C3D20' }}>
+                <span>Total: <span className="font-mono font-bold">{totalMedals}</span> medalla{totalMedals !== 1 ? 's' : ''}</span>
+                <span><span className="font-mono font-bold">{progress}</span>/60 para la próxima</span>
+              </div>
+              <div className="rounded-full overflow-hidden" style={{ background: 'rgba(200,134,10,0.15)', height: 6 }}>
+                <div
+                  className="h-full rounded-full transition-all duration-700"
+                  style={{ width: `${(progress / 60) * 100}%`, background: '#C8860A' }}
+                />
+              </div>
+            </div>
+          )}
+
           <button
             onClick={() => { setCheckoutOpen(false); setConfirmed(false) }}
             className="px-8 py-3 rounded-full bg-espresso-800 text-cream-50 text-sm font-medium hover:bg-espresso-700 transition-colors"
@@ -270,7 +307,11 @@ export default function CheckoutView() {
 
               <div className="px-6 pb-6">
                 <button
-                  onClick={() => setConfirmed(true)}
+                  onClick={() => {
+                    const result = earnMedals(effectiveTotal)
+                    setEarnedResult(result)
+                    setConfirmed(true)
+                  }}
                   className="w-full py-3.5 rounded-full bg-espresso-800 text-cream-50 text-sm font-medium hover:bg-espresso-700 transition-colors active:scale-[0.98] shadow-md"
                 >
                   Confirmar pedido

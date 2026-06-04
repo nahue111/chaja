@@ -1,13 +1,29 @@
 import { useEffect, useState } from 'react'
-import { Search, Mail, MapPin } from 'lucide-react'
-import { getCustomers, fmt, fmtDate } from '../data'
+import { Search, MapPin, Trash2, X } from 'lucide-react'
+import { getCustomers, getSales, fmt, fmtDate } from '../data'
 
-export default function Clientes() {
+const SALES_KEY = 'chadmin_s'
+
+function deleteSalesByEmail(email) {
+  const sales = JSON.parse(localStorage.getItem(SALES_KEY) || '[]')
+  localStorage.setItem(SALES_KEY, JSON.stringify(sales.filter(s => s.customer?.email !== email)))
+}
+
+export default function Clientes({ role }) {
   const [customers, setCustomers] = useState([])
   const [query, setQuery] = useState('')
   const [expanded, setExpanded] = useState(null)
+  const [confirmDelete, setConfirmDelete] = useState(null)
 
-  useEffect(() => { setCustomers(getCustomers()) }, [])
+  const load = () => setCustomers(getCustomers())
+  useEffect(() => { load() }, [])
+
+  const handleDelete = (email) => {
+    deleteSalesByEmail(email)
+    load()
+    setConfirmDelete(null)
+    setExpanded(null)
+  }
 
   const filtered = customers.filter(c => {
     if (!query) return true
@@ -51,7 +67,7 @@ export default function Clientes() {
         <div
           className="grid text-xs font-semibold tracking-wide uppercase px-6 py-3.5"
           style={{
-            gridTemplateColumns: '2fr 2fr 60px 80px 100px',
+            gridTemplateColumns: role === 'superadmin' ? '2fr 2fr 60px 80px 100px 40px' : '2fr 2fr 60px 80px 100px',
             color: '#7A5230',
             borderBottom: '1px solid #F5EFE0',
             background: '#FDFBF7',
@@ -62,6 +78,7 @@ export default function Clientes() {
           <span className="text-center">Edad</span>
           <span className="text-center">Pedidos</span>
           <span className="text-right">Total</span>
+          {role === 'superadmin' && <span />}
         </div>
 
         {filtered.length === 0 ? (
@@ -69,14 +86,16 @@ export default function Clientes() {
         ) : (
           filtered.map((c, i) => (
             <div key={c.email} style={{ borderTop: i === 0 ? 'none' : '1px solid #FAF7F0' }}>
-              <button
-                onClick={() => setExpanded(expanded === c.email ? null : c.email)}
-                className="w-full grid items-center px-6 py-4 transition-colors text-left"
-                style={{ gridTemplateColumns: '2fr 2fr 60px 80px 100px' }}
+              <div
+                className="grid items-center px-6 py-4 transition-colors"
+                style={{ gridTemplateColumns: role === 'superadmin' ? '2fr 2fr 60px 80px 100px 40px' : '2fr 2fr 60px 80px 100px' }}
                 onMouseEnter={e => (e.currentTarget.style.background = '#FDFBF7')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
-                <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setExpanded(expanded === c.email ? null : c.email)}
+                  className="flex items-center gap-3 text-left"
+                >
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-display text-sm font-semibold"
                     style={{ background: 'rgba(200,134,10,0.08)', color: '#C8860A' }}
@@ -84,12 +103,40 @@ export default function Clientes() {
                     {c.name?.[0] || '?'}
                   </div>
                   <p className="text-sm font-medium truncate" style={{ color: '#2C1A0E' }}>{c.name}</p>
-                </div>
+                </button>
                 <p className="text-sm truncate pr-4" style={{ color: '#5C3D20' }}>{c.email}</p>
                 <p className="text-sm text-center" style={{ color: '#5C3D20' }}>{c.age ?? '—'}</p>
                 <p className="font-mono text-sm font-semibold text-center" style={{ color: '#2C1A0E' }}>{c.orders}</p>
                 <p className="font-mono text-sm font-semibold text-right" style={{ color: '#C8860A' }}>{fmt(c.totalSpent)}</p>
-              </button>
+                {role === 'superadmin' && (
+                  <div className="flex justify-end">
+                    {confirmDelete === c.email ? (
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleDelete(c.email)}
+                          className="text-[10px] px-2 py-1 rounded-lg font-semibold"
+                          style={{ background: 'rgba(220,38,38,0.08)', color: '#dc2626' }}
+                        >
+                          Eliminar
+                        </button>
+                        <button onClick={() => setConfirmDelete(null)} style={{ color: '#7A5230' }}>
+                          <X size={11} />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setConfirmDelete(c.email)}
+                        className="w-7 h-7 rounded-lg flex items-center justify-center transition-all opacity-0 hover:opacity-100"
+                        style={{ color: '#dc2626' }}
+                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(220,38,38,0.08)'; e.currentTarget.style.opacity = '1' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.opacity = '0' }}
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
 
               {expanded === c.email && (
                 <div className="px-6 pb-4" style={{ background: '#FDFBF7', borderTop: '1px solid #F5EFE0' }}>

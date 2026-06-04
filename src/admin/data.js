@@ -1,5 +1,11 @@
 export const ADMIN_PASSWORD = 'chaja2024'
 
+export const STATUSES = {
+  en_proceso: { label: 'En proceso', color: '#C8860A', bg: 'rgba(200,134,10,0.1)' },
+  entregado:  { label: 'Entregado',  color: '#16a34a', bg: 'rgba(22,163,74,0.08)' },
+  cancelado:  { label: 'Cancelado',  color: '#dc2626', bg: 'rgba(220,38,38,0.08)' },
+}
+
 const K = { products: 'chadmin_p', sales: 'chadmin_s', restocks: 'chadmin_r' }
 
 export const CATALOG = [
@@ -45,7 +51,7 @@ const INIT_STOCK = {
 
 const MOCK_SALES = [
   {
-    id: 'vta-001', date: '2026-05-20T14:32:00',
+    id: 'vta-001', date: '2026-05-20T14:32:00', status: 'en_proceso',
     customer: { name: 'María González', email: 'maria.gonz@gmail.com', age: 34, address: 'Av. Italia 3420, Montevideo' },
     items: [
       { id: 'familiar-600-durazno', name: 'Torta Chajá con Durazno', qty: 1, price: 625 },
@@ -54,7 +60,7 @@ const MOCK_SALES = [
     subtotal: 1233, shipping: 0, total: 1233,
   },
   {
-    id: 'vta-002', date: '2026-05-19T10:15:00',
+    id: 'vta-002', date: '2026-05-19T10:15:00', status: 'en_proceso',
     customer: { name: 'Carlos Rodríguez', email: 'carlos.rod@hotmail.com', age: 42, address: 'Bulevar Artigas 1200, Montevideo' },
     items: [
       { id: 'x12-durazno', name: 'Caja x12 Durazno', qty: 1, price: 1824 },
@@ -62,7 +68,7 @@ const MOCK_SALES = [
     subtotal: 1824, shipping: 0, total: 1824,
   },
   {
-    id: 'vta-003', date: '2026-05-18T16:45:00',
+    id: 'vta-003', date: '2026-05-18T16:45:00', status: 'entregado',
     customer: { name: 'Laura Fernández', email: 'laurita.fer@gmail.com', age: 29, address: 'Acevedo Díaz 2100, Montevideo' },
     items: [
       { id: 'familiar-gold', name: 'Chajá Gold 1200 gr', qty: 1, price: 1150 },
@@ -71,7 +77,7 @@ const MOCK_SALES = [
     subtotal: 1550, shipping: 0, total: 1550,
   },
   {
-    id: 'vta-004', date: '2026-05-17T09:20:00',
+    id: 'vta-004', date: '2026-05-17T09:20:00', status: 'entregado',
     customer: { name: 'Diego Martínez', email: 'diego.mtz@gmail.com', age: 38, address: 'J. Barrios Amorim 1500, Montevideo' },
     items: [
       { id: 'petit-helado-durazno', name: 'Petit Helado Durazno', qty: 3, price: 113 },
@@ -80,7 +86,7 @@ const MOCK_SALES = [
     subtotal: 678, shipping: 250, total: 928,
   },
   {
-    id: 'vta-005', date: '2026-05-16T12:00:00',
+    id: 'vta-005', date: '2026-05-16T12:00:00', status: 'entregado',
     customer: { name: 'Ana Pérez', email: 'ana.perez@gmail.com', age: 55, address: 'Luis Batlle Berres 4200, Montevideo' },
     items: [
       { id: 'familiar-especial', name: 'Chajá Frágil 1500 gr', qty: 1, price: 1590 },
@@ -88,7 +94,7 @@ const MOCK_SALES = [
     subtotal: 1590, shipping: 0, total: 1590,
   },
   {
-    id: 'vta-006', date: '2026-05-15T18:30:00',
+    id: 'vta-006', date: '2026-05-15T18:30:00', status: 'entregado',
     customer: { name: 'Sebastián López', email: 'seba.lopez@outlook.com', age: 31, address: '18 de Julio 3200, Montevideo' },
     items: [
       { id: 'x4-frutilla', name: 'Caja x4 Frutilla', qty: 2, price: 608 },
@@ -97,7 +103,7 @@ const MOCK_SALES = [
     subtotal: 2016, shipping: 0, total: 2016,
   },
   {
-    id: 'vta-007', date: '2026-05-13T11:10:00',
+    id: 'vta-007', date: '2026-05-13T11:10:00', status: 'cancelado',
     customer: { name: 'Carolina Suárez', email: 'caro.suarez@gmail.com', age: 26, address: 'Rivera 2345, Montevideo' },
     items: [
       { id: 'torta-charlotte', name: 'Charlotte Frutos del Bosque', qty: 1, price: 800 },
@@ -106,7 +112,7 @@ const MOCK_SALES = [
     subtotal: 1400, shipping: 0, total: 1400,
   },
   {
-    id: 'vta-008', date: '2026-05-10T15:50:00',
+    id: 'vta-008', date: '2026-05-10T15:50:00', status: 'entregado',
     customer: { name: 'Federico Cabrera', email: 'fede.cab@gmail.com', age: 45, address: 'Pablo de María 1100, Montevideo' },
     items: [
       { id: 'x12-clasico', name: 'Caja x12 Clásico', qty: 1, price: 1608 },
@@ -173,6 +179,13 @@ export const getSales = () =>
 export const getRestocks = () =>
   JSON.parse(localStorage.getItem(K.restocks) || '[]')
     .sort((a, b) => new Date(b.date) - new Date(a.date))
+
+export function updateSaleStatus(id, status) {
+  const sales = JSON.parse(localStorage.getItem(K.sales) || '[]')
+  const updated = sales.map(s => s.id === id ? { ...s, status } : s)
+  localStorage.setItem(K.sales, JSON.stringify(updated))
+  return updated
+}
 
 export function setStock(id, stock) {
   const products = getProducts().map(p => p.id === id ? { ...p, stock: Math.max(0, stock) } : p)

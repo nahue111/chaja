@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ShoppingBag, User } from 'lucide-react'
+import { ShoppingBag, User, Medal } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
@@ -15,7 +15,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [visible, setVisible] = useState(false)
   const { totalItems, setOpen: setCartOpen } = useCart()
-  const { user, setLoginOpen, logout } = useAuth()
+  const { user, setLoginOpen, logout, medals, medalProgress } = useAuth()
   const { pathname } = useLocation()
   const isNosotros = pathname === '/nosotros'
 
@@ -79,14 +79,25 @@ export default function Navbar() {
           </button>
 
           {/* Login / User (desktop) */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center gap-2">
             {user ? (
-              <button
-                onClick={logout}
-                className={`text-xs font-medium px-3 py-2 rounded-full transition-colors duration-300 ${solid ? 'text-espresso-500 hover:text-espresso-800' : 'text-cream-300 hover:text-white'}`}
-              >
-                {user.name} · Salir
-              </button>
+              <>
+                {/* Medals badge */}
+                <div
+                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-full"
+                  style={{ background: 'rgba(200,134,10,0.1)', border: '1px solid rgba(200,134,10,0.2)' }}
+                  title={`${medals} medalla${medals !== 1 ? 's' : ''} · ${medalProgress}/60 pesos para la próxima`}
+                >
+                  <Medal size={12} strokeWidth={2} style={{ color: '#C8860A' }} />
+                  <span className="font-mono text-xs font-bold" style={{ color: '#C8860A' }}>{medals}</span>
+                </div>
+                <button
+                  onClick={logout}
+                  className={`text-xs font-medium px-3 py-2 rounded-full transition-colors duration-300 ${solid ? 'text-espresso-500 hover:text-espresso-800' : 'text-cream-300 hover:text-white'}`}
+                >
+                  {user.name} · Salir
+                </button>
+              </>
             ) : (
               <button
                 onClick={() => setLoginOpen(true)}
@@ -125,9 +136,17 @@ export default function Navbar() {
               : <a key={link.label} href={link.href} className="text-espresso-700 font-medium text-lg" onClick={() => setMenuOpen(false)}>{link.label}</a>
           ))}
           {user ? (
-            <button onClick={() => { logout(); setMenuOpen(false) }} className="text-espresso-500 text-sm text-left">
-              {user.name} · Cerrar sesión
-            </button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 px-2.5 py-1.5 rounded-full" style={{ background: 'rgba(200,134,10,0.1)', border: '1px solid rgba(200,134,10,0.2)' }}>
+                  <Medal size={12} strokeWidth={2} style={{ color: '#C8860A' }} />
+                  <span className="font-mono text-xs font-bold" style={{ color: '#C8860A' }}>{medals} medalla{medals !== 1 ? 's' : ''}</span>
+                </div>
+              </div>
+              <button onClick={() => { logout(); setMenuOpen(false) }} className="text-espresso-500 text-sm">
+                {user.name} · Salir
+              </button>
+            </div>
           ) : (
             <button onClick={() => { setLoginOpen(true); setMenuOpen(false) }} className="text-espresso-700 font-medium text-lg text-left">
               Iniciar sesión
