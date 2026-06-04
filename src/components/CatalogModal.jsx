@@ -123,7 +123,7 @@ export default function CatalogModal() {
         {/* Header */}
         <div className="flex items-center justify-between px-6 md:px-10 py-4 border-b border-cream-200 bg-cream-50 shrink-0">
           <div>
-            <p className="text-amber text-xs font-medium tracking-[0.2em] uppercase mb-0.5">Chajá Bistro</p>
+            <p className="text-amber text-xs font-medium tracking-[0.2em] uppercase mb-0.5">Chajá</p>
             <h2 className="font-display text-xl md:text-2xl text-espresso-800 font-semibold">Nuestra carta</h2>
           </div>
           <button

@@ -63,7 +63,7 @@ export default function AdminShell({ children, onLogout, role }) {
               onError={e => { e.target.style.display = 'none' }}
             />
             <div className="min-w-0">
-              <p className="font-display text-sm font-semibold leading-none" style={{ color: '#FDFBF7' }}>Chajá Bistro</p>
+              <p className="font-display text-sm font-semibold leading-none" style={{ color: '#FDFBF7' }}>Chajá</p>
               <div className="flex items-center gap-1.5 mt-1.5">
                 {isSuperAdmin
                   ? <Shield size={9} style={{ color: '#C8860A' }} />

@@ -177,7 +177,7 @@ export default function PostresDestacados() {
               Postres destacados
             </h2>
             <p className="text-espresso-500 text-sm leading-relaxed max-w-[44ch] md:text-right">
-              Una selección especial actualizada por el equipo de Chajá Bistro.
+              Una selección especial actualizada por el equipo de Chajá.
             </p>
           </div>
         </div>

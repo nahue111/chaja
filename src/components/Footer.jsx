@@ -25,7 +25,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <img src="/logo.png" alt="Chajá Bistro" className="w-9 h-9 rounded-full object-cover shrink-0" />
+              <img src="/logo.png" alt="Chajá" className="w-9 h-9 rounded-full object-cover shrink-0" />
               <p className="font-display text-2xl text-cream-50 font-semibold tracking-tight">
                 Chajá
               </p>

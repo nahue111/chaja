@@ -97,7 +97,7 @@ export default function AdminGate({ onSuccess }) {
               <>
                 <div className="text-center mb-7">
                   <p className="text-[10px] tracking-[0.3em] uppercase font-medium mb-2" style={{ color: '#C8860A' }}>
-                    Chajá Bistro
+                    Chajá
                   </p>
                   <h1 className="font-display text-xl font-semibold" style={{ color: '#FDFBF7' }}>
                     Panel de Administración

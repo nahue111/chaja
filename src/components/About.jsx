@@ -62,7 +62,7 @@ export default function About() {
             </h2>
 
             <p className="text-espresso-500 text-base leading-relaxed max-w-[55ch] mb-10">
-              El Chajá nació en Paysandú en 1927, creado por Orlando Castellano. Lleva el nombre del ave nacional del Uruguay — majestuosa, liviana, con una nobleza que pocos pueden ignorar. En Chajá Bistro lo elaboramos con esa misma filosofía: sin apuros, sin atajos.
+              El Chajá nació en Paysandú en 1927, creado por Orlando Castellano. Lleva el nombre del ave nacional del Uruguay — majestuosa, liviana, con una nobleza que pocos pueden ignorar. En Chajá lo elaboramos con esa misma filosofía: sin apuros, sin atajos.
             </p>
 
             <div className="space-y-7">

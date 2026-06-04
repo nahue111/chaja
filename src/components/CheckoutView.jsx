@@ -117,7 +117,7 @@ export default function CheckoutView() {
             Volver al carrito
           </button>
           <a href="#" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Chajá Bistro" className="w-7 h-7 rounded-full object-cover" />
+            <img src="/logo.png" alt="Chajá" className="w-7 h-7 rounded-full object-cover" />
             <span className="font-display text-lg font-semibold text-espresso-800">
               Chajá
             </span>
